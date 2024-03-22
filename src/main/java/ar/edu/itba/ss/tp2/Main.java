@@ -18,7 +18,7 @@ public class Main {
             System.err.println("No input file found");
         }
 
-        if (data == null || data.size() != 5) {
+        if (data == null || data.size() != 6) {
             throw new IllegalStateException();
         }
 
@@ -27,6 +27,7 @@ public class Main {
         final double interactionRadius = Double.parseDouble(data.get(2)); // r_c
         final double velocity = Double.parseDouble(data.get(3)); // v
         final double noise = Double.parseDouble(data.get(4)); // eta
+        final int time = Integer.parseInt(data.get(5)); // t
 
         // Creamos el plano
         Plane.Builder<MovingParticle> planeBuilder = Plane.Builder.newBuilder();
@@ -62,6 +63,6 @@ public class Main {
                 .withNoise(noise)
                 .build();
 
-        automata.execute(5);
+        automata.execute(time);
     }
 }

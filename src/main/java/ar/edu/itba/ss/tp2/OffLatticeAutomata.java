@@ -38,48 +38,63 @@ public class OffLatticeAutomata {
         }
 
         try (
-                BufferedWriter writer = Files.newBufferedWriter(
-                        Paths.get("t_0.txt"),
+                BufferedWriter polarizationWriter = Files.newBufferedWriter(
+                        Paths.get("polarization.txt"),
+                        StandardOpenOption.WRITE,
+                        StandardOpenOption.CREATE,
+                        StandardOpenOption.TRUNCATE_EXISTING
+                );
+                BufferedWriter timesWriter = Files.newBufferedWriter(
+                        Paths.get("times.txt"),
                         StandardOpenOption.WRITE,
                         StandardOpenOption.CREATE,
                         StandardOpenOption.TRUNCATE_EXISTING
                 )
         ) {
-            List<MovingParticle> particles = new ArrayList<>(cim.getPlane().getParticles());
+            // t_0
+            final ArrayList<Double> angles = new ArrayList<>();
+            final ArrayList<MovingParticle> particles = new ArrayList<>(cim.getPlane().getParticles());
             particles.sort(Comparator.comparing(particle -> Integer.parseInt(particle.getIdentifier().substring(2))));
             for (MovingParticle particle : particles) {
-                writer.write(String.format("%s %f %f %f", particle.getIdentifier(), particle.getX(), particle.getY(), particle.getAngle()));
-                writer.newLine();
-            }
-        } catch (Exception e) {
-            System.err.println("Error writing output");
-        }
+                timesWriter.write(String.format("%d %s %f %f %f", 0, particle.getIdentifier(), particle.getX(), particle.getY(), particle.getAngle()));
+                timesWriter.newLine();
 
-        for (int i = 1; i < t; i++) {
-            try (
-                    BufferedWriter writer = Files.newBufferedWriter(
-                            Paths.get(String.format("t_%d.txt", i)),
-                            StandardOpenOption.WRITE,
-                            StandardOpenOption.CREATE,
-                            StandardOpenOption.TRUNCATE_EXISTING
-                    )
-            ) {
+                angles.add(particle.getAngle());
+            }
+            double sumCos = angles.stream().mapToDouble(Math::cos).sum();
+            double sumSin = angles.stream().mapToDouble(Math::sin).sum();
+            double polarization = Math.sqrt(Math.pow(sumCos, 2) + Math.pow(sumSin, 2)) / cim.getPlane().getParticles().size();
+            polarizationWriter.write(String.format("%f", polarization));
+            polarizationWriter.newLine();
+
+            // t_i / i > 0
+            for (int i = 1; i < t; i++) {
+                angles.clear();
+
                 Map<MovingParticle, Set<MovingParticle>> neighbours = cim.execute();
                 List<Map.Entry<MovingParticle, Set<MovingParticle>>> entries = new ArrayList<>(neighbours.entrySet());
                 entries.sort(Comparator.comparing(entry -> Integer.parseInt(entry.getKey().getIdentifier().substring(2))));
+
                 for (Map.Entry<MovingParticle, Set<MovingParticle>> entry : entries) {
                     MovingParticle particle = entry.getKey();
                     Set<MovingParticle> neighboursForParticle = entry.getValue();
                     particle.setAngle(calculateNewAngle(particle.getAngle(), neighboursForParticle.stream().map(MovingParticle::getAngle).toList()));
                     particle.setX(calculateNewXPosition(particle.getX(), particle.getVelocity(), particle.getAngle()));
                     particle.setY(calculateNewYPosition(particle.getY(), particle.getVelocity(), particle.getAngle()));
-                    writer.write(String.format("%s %f %f %f", particle.getIdentifier(), particle.getX(), particle.getY(), particle.getAngle()));
-                    writer.newLine();
+                    timesWriter.write(String.format("%d %s %f %f %f", i, particle.getIdentifier(), particle.getX(), particle.getY(), particle.getAngle()));
+                    timesWriter.newLine();
+
+                    angles.add(particle.getAngle());
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.err.println("Error writing output");
+
+                sumCos = angles.stream().mapToDouble(Math::cos).sum();
+                sumSin = angles.stream().mapToDouble(Math::sin).sum();
+                polarization = Math.sqrt(Math.pow(sumCos, 2) + Math.pow(sumSin, 2)) / cim.getPlane().getParticles().size();
+                polarizationWriter.write(String.format("%f", polarization));
+                polarizationWriter.newLine();
             }
+        } catch (Exception e) {
+            System.err.println("Error writing output");
         }
     }
 
