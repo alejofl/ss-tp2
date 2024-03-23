@@ -18,11 +18,13 @@ public class OffLatticeAutomata {
     }
 
     private double calculateNewXPosition(double x, double velocity, double angle) {
-        return x + velocity * Math.cos(angle);
+        final double result = x + velocity * Math.cos(angle);
+        return result > cim.getPlane().getLength() ? result - cim.getPlane().getLength() : result < 0 ? result + cim.getPlane().getLength() : result;
     }
 
     private double calculateNewYPosition(double y, double velocity, double angle) {
-        return y + velocity * Math.sin(angle);
+        final double result = y + velocity * Math.sin(angle);
+        return result > cim.getPlane().getLength() ? result - cim.getPlane().getLength() : result < 0 ? result + cim.getPlane().getLength() : result;
     }
 
     private double calculateNewAngle(double angle, List<Double> neighboursAngles) {

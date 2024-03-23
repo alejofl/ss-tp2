@@ -35,13 +35,13 @@ public class Main {
         for (int i = 0; i < particleCount; i++) {
             final double x = Math.random() * planeLength;
             final double y = Math.random() * planeLength;
-            final double angle = noise * Math.random() - noise / 2;
+            final double angle = 2 * Math.PI * Math.random() - Math.PI;
             planeBuilder = planeBuilder.withParticle(
                     MovingParticle.Builder.newBuilder()
                             .withIdentifier(String.format("p_%d", i))
                             .withX(x)
                             .withY(y)
-                            .withRadius(0.5)
+                            .withRadius(0)
                             .withVelocity(velocity)
                             .withAngle(angle)
                             .build()
