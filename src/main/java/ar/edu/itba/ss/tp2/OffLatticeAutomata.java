@@ -35,13 +35,17 @@ public class OffLatticeAutomata {
     }
 
     public void execute(int t) {
+        this.execute(t, "times.txt");
+    }
+
+    public void execute(int t, String filename) {
         if (t < 0) {
             throw new IllegalArgumentException();
         }
 
         try (
                 BufferedWriter timesWriter = Files.newBufferedWriter(
-                        Paths.get("times.txt"),
+                        Paths.get(filename),
                         StandardOpenOption.WRITE,
                         StandardOpenOption.CREATE,
                         StandardOpenOption.TRUNCATE_EXISTING
