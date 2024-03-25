@@ -40,12 +40,6 @@ public class OffLatticeAutomata {
         }
 
         try (
-                BufferedWriter polarizationWriter = Files.newBufferedWriter(
-                        Paths.get("polarization.txt"),
-                        StandardOpenOption.WRITE,
-                        StandardOpenOption.CREATE,
-                        StandardOpenOption.TRUNCATE_EXISTING
-                );
                 BufferedWriter timesWriter = Files.newBufferedWriter(
                         Paths.get("times.txt"),
                         StandardOpenOption.WRITE,
@@ -54,25 +48,15 @@ public class OffLatticeAutomata {
                 )
         ) {
             // t_0
-            final ArrayList<Double> angles = new ArrayList<>();
             final ArrayList<MovingParticle> particles = new ArrayList<>(cim.getPlane().getParticles());
             particles.sort(Comparator.comparing(particle -> Integer.parseInt(particle.getIdentifier().substring(2))));
             for (MovingParticle particle : particles) {
                 timesWriter.write(String.format("%d %s %f %f %f", 0, particle.getIdentifier(), particle.getX(), particle.getY(), particle.getAngle()));
                 timesWriter.newLine();
-
-                angles.add(particle.getAngle());
             }
-            double sumCos = angles.stream().mapToDouble(Math::cos).sum();
-            double sumSin = angles.stream().mapToDouble(Math::sin).sum();
-            double polarization = Math.sqrt(Math.pow(sumCos, 2) + Math.pow(sumSin, 2)) / cim.getPlane().getParticles().size();
-            polarizationWriter.write(String.format("%f", polarization));
-            polarizationWriter.newLine();
 
             // t_i / i > 0
             for (int i = 1; i < t; i++) {
-                angles.clear();
-
                 Map<MovingParticle, Set<MovingParticle>> neighbours = cim.execute();
                 List<Map.Entry<MovingParticle, Set<MovingParticle>>> entries = new ArrayList<>(neighbours.entrySet());
                 entries.sort(Comparator.comparing(entry -> Integer.parseInt(entry.getKey().getIdentifier().substring(2))));
@@ -85,15 +69,7 @@ public class OffLatticeAutomata {
                     particle.setY(calculateNewYPosition(particle.getY(), particle.getVelocity(), particle.getAngle()));
                     timesWriter.write(String.format("%d %s %f %f %f", i, particle.getIdentifier(), particle.getX(), particle.getY(), particle.getAngle()));
                     timesWriter.newLine();
-
-                    angles.add(particle.getAngle());
                 }
-
-                sumCos = angles.stream().mapToDouble(Math::cos).sum();
-                sumSin = angles.stream().mapToDouble(Math::sin).sum();
-                polarization = Math.sqrt(Math.pow(sumCos, 2) + Math.pow(sumSin, 2)) / cim.getPlane().getParticles().size();
-                polarizationWriter.write(String.format("%f", polarization));
-                polarizationWriter.newLine();
             }
         } catch (Exception e) {
             System.err.println("Error writing output");

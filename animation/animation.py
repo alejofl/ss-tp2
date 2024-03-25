@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
 with (open("../times.txt") as times_file,
-      open("../polarization.txt") as polarization_file,
       open("../input.txt") as input_file):
     input_data = input_file.readlines()
     particle_count = int(input_data[0][:-1])
