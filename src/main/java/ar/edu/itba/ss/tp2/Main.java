@@ -26,10 +26,10 @@ public class Main {
         final int planeLength = Integer.parseInt(data.get(1)); // L
         final double interactionRadius = Double.parseDouble(data.get(2)); // r_c
         final double velocity = Double.parseDouble(data.get(3)); // v
-        final double noise = Double.parseDouble(data.get(4)); // eta
+        double noise = Double.parseDouble(data.get(4)); // eta
         final int time = Integer.parseInt(data.get(5)); // t
 
-        for (int k = 0; k < 9; k++) {
+        for (int k = 0; noise <= 6; k++, noise += 0.2) {
             // Creamos el plano
             Plane.Builder<MovingParticle> planeBuilder = Plane.Builder.newBuilder();
             // Creamos todas las partículas (con posiciones random) y asignamos las partículas al plano
@@ -58,7 +58,7 @@ public class Main {
                             .withPlane(plane)
                             .build()
                     )
-                    .withNoise(noise + k * 0.5)
+                    .withNoise(noise)
                     .build();
             automata.execute(time, String.format("times%d.txt", k));
         }
