@@ -28,10 +28,10 @@ public class OffLatticeAutomata {
     }
 
     private double calculateNewAngle(double angle, List<Double> neighboursAngles) {
-        double numerator = (neighboursAngles.stream().mapToDouble(Math::sin).sum() + Math.sin(angle)) / (neighboursAngles.size() + 1);
-        double denominator = (neighboursAngles.stream().mapToDouble(Math::cos).sum() + Math.cos(angle)) / (neighboursAngles.size() + 1);
+        double sinProm = (neighboursAngles.stream().mapToDouble(Math::sin).sum() + Math.sin(angle)) / (neighboursAngles.size() + 1);
+        double cosProm = (neighboursAngles.stream().mapToDouble(Math::cos).sum() + Math.cos(angle)) / (neighboursAngles.size() + 1);
         double randomNoise = noise * Math.random() - noise / 2;
-        return Math.atan2(denominator, numerator) + randomNoise;
+        return Math.atan2(sinProm, cosProm) + randomNoise;
     }
 
     public void execute(int t) {
