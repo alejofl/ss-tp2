@@ -62,13 +62,17 @@ public class OffLatticeAutomata {
             // t_i / i > 0
             for (int i = 1; i < t; i++) {
                 Map<MovingParticle, Set<MovingParticle>> neighbours = cim.execute();
-                List<Map.Entry<MovingParticle, Set<MovingParticle>>> entries = new ArrayList<>(neighbours.entrySet());
-                entries.sort(Comparator.comparing(entry -> Integer.parseInt(entry.getKey().getIdentifier().substring(2))));
 
-                for (Map.Entry<MovingParticle, Set<MovingParticle>> entry : entries) {
+                List<Map.Entry<MovingParticle, List<Double>>> neighboursAngles = new ArrayList<>();
+                for (Map.Entry<MovingParticle, Set<MovingParticle>> entry : neighbours.entrySet()) {
+                    neighboursAngles.add(Map.entry(entry.getKey(), entry.getValue().stream().map(MovingParticle::getAngle).toList()));
+                }
+                neighboursAngles.sort(Comparator.comparingInt(entry -> Integer.parseInt(entry.getKey().getIdentifier().substring(2))));
+
+                for (Map.Entry<MovingParticle, List<Double>> entry : neighboursAngles) {
                     MovingParticle particle = entry.getKey();
-                    Set<MovingParticle> neighboursForParticle = entry.getValue();
-                    particle.setAngle(calculateNewAngle(particle.getAngle(), neighboursForParticle.stream().map(MovingParticle::getAngle).toList()));
+                    List<Double> angles = entry.getValue();
+                    particle.setAngle(calculateNewAngle(particle.getAngle(), angles));
                     particle.setX(calculateNewXPosition(particle.getX(), particle.getVelocity(), particle.getAngle()));
                     particle.setY(calculateNewYPosition(particle.getY(), particle.getVelocity(), particle.getAngle()));
                     timesWriter.write(String.format("%d %s %f %f %f", i, particle.getIdentifier(), particle.getX(), particle.getY(), particle.getAngle()));

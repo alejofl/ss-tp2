@@ -42,3 +42,6 @@ env/
 *.txt
 !requirements.txt
 *.png
+*.mp4
+*.mov
+out/
