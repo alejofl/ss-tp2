@@ -3,6 +3,7 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 with (open("../input.txt") as input_file):
     STATIONARY = 500
 

@@ -3,7 +3,9 @@ import math
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation, FFMpegWriter
 
-with (open("../times.txt") as times_file,
+
+TIMES_NUMBER = 8
+with (open(f"../times{TIMES_NUMBER}.txt") as times_file,
       open("../input.txt") as input_file):
     input_data = input_file.readlines()
     particle_count = int(input_data[0][:-1])
@@ -35,6 +37,6 @@ with (open("../times.txt") as times_file,
     # Create the animation
     ani = FuncAnimation(fig, update, frames=time_count, blit=False)
     # Display the animation
-    plt.show()
+    # plt.show()
     # Save the animation
-    # ani.save("animation.mp4", writer=FFMpegWriter(fps=30))
+    ani.save("../animation.mp4", writer=FFMpegWriter(fps=30))

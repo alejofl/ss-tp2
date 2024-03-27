@@ -2,6 +2,7 @@ import csv
 import math
 import matplotlib.pyplot as plt
 
+
 with (open("../input.txt") as input_file):
     input_data = input_file.readlines()
     particle_count = int(input_data[0][:-1])
