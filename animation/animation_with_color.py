@@ -1,9 +1,20 @@
 import csv
 import math
 import matplotlib.pyplot as plt
+from matplotlib.colors import hsv_to_rgb
 from matplotlib.animation import FuncAnimation, FFMpegWriter
+import numpy as np
 
-with (open("../times.txt") as times_file,
+
+def vector_to_rgb(angle):
+    angle = angle % (2 * np.pi)
+    if angle < 0:
+        angle += 2 * np.pi
+
+    return hsv_to_rgb((angle / 2 / np.pi, 1, 0.7))
+
+
+with (open("../times3.txt") as times_file,
       open("../input.txt") as input_file):
     input_data = input_file.readlines()
     particle_count = int(input_data[0][:-1])
@@ -28,13 +39,13 @@ with (open("../times.txt") as times_file,
         for particle_data in times[i]:
             x, y, angle = float(particle_data[2]), float(particle_data[3]), float(particle_data[4])
             dx, dy = math.cos(angle), math.sin(angle)
-            ax.quiver(x, y, dx, dy, angles='xy', scale_units='xy', scale=5, headaxislength=0, headlength=0, headwidth=0, width=0.0025)
+            ax.quiver(x, y, dx, dy, color=vector_to_rgb(angle), angles='xy', scale_units='xy', scale=5, headaxislength=0, headlength=0, headwidth=0, width=0.0025)
 
         return ax
 
     # Create the animation
     ani = FuncAnimation(fig, update, frames=time_count, blit=False)
     # Display the animation
-    plt.show()
+    # plt.show()
     # Save the animation
-    # ani.save("animation.mp4", writer=FFMpegWriter(fps=30))
+    ani.save("animation_with_color.mp4", writer=FFMpegWriter(fps=30))
