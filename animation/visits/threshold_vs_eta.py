@@ -10,6 +10,7 @@ with (open("../../input.txt") as input_file, open("../../visits_input.txt") as v
     visits_percentage = float(visits_data[3][:-1]) / 100.0
     particle_threshold = int(particle_count * visits_percentage)
 
+    plt.rcParams.update({'font.size': 20})
     fig, ax = plt.subplots()
     xs = []
     ys = []
@@ -35,8 +36,9 @@ with (open("../../input.txt") as input_file, open("../../visits_input.txt") as v
 
     ax.errorbar(xs, ys, yerr=errors, fmt='o', capsize=5)
 
+    ax.set_xlabel("Ruido", fontdict={"weight": "bold"})
+    ax.set_ylabel(f"Tiempo tal que {round(visits_percentage * 100)}% de partículas visitan (s)", fontdict={"weight": "bold"})
     ax.set_xlim(0, 6)
-    plt.xticks(np.arange(0, 6.2, 0.2))
 
     # Display the animation
     plt.show()

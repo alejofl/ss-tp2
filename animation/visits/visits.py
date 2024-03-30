@@ -30,10 +30,13 @@ class Zone:
             self.last_visitors = self.current_visitors
         self.current_visitors = []
 
+    def clear(self):
+        self.last_visitors = []
+        self.current_visitors = []
+        self.statistics = []
 
-TIMES_NUMBER = 29
-with (open(f"../../times{TIMES_NUMBER}.txt") as times_file,
-      open("../../input.txt") as input_file,
+
+with (open("../../input.txt") as input_file,
       open("../../visits_input.txt") as visits_file):
     input_data = input_file.readlines()
     particle_count = int(input_data[0][:-1])
@@ -45,27 +48,36 @@ with (open(f"../../times{TIMES_NUMBER}.txt") as times_file,
     zones_radius = float(visits_data[1][:-1])
     is_pbc = visits_data[2][:-1] == "p" or visits_data[2][:-1] == "P"
 
-    data = list(csv.reader(times_file, delimiter=" "))
-    times = []
-    for i in range(time_count):
-        times.append(data[i * particle_count:(i + 1) * particle_count])
-
     zones = []
     for i in range(zones_count):
         zones.append(Zone(random.uniform(0, plane_length), random.uniform(0, plane_length), zones_radius, is_pbc))
 
-    for time in times:
-        for particle_data in time:
-            identifier, x, y = particle_data[1], float(particle_data[2]), float(particle_data[3])
-            for zone in zones:
-                zone.is_visiting(x, y, identifier)
-        for zone in zones:
-            zone.next_frame()
-
-    output = open(f"../../visits{TIMES_NUMBER}.txt", "w")
+    zones_file = open(f"../../visits_zones.txt", "w")
     for zone in zones:
-        for i in range(len(zone.statistics)):
-            space = " " if i < len(zone.statistics) - 1 else ""
-            output.write(f"{zone.statistics[i]}{space}")
-        output.write("\n")
-    output.close()
+        zones_file.write(f"{zone.radius} {zone.x} {zone.y}\n")
+    zones_file.close()
+
+    files = [open(f"../../times{t}.txt") for t in range(0, 30)]
+    for k in range(len(files)):
+        data = list(csv.reader(files[k], delimiter=" "))
+
+        times = []
+        for i in range(time_count):
+            times.append(data[i * particle_count:(i + 1) * particle_count])
+
+        for time in times:
+            for particle_data in time:
+                identifier, x, y = particle_data[1], float(particle_data[2]), float(particle_data[3])
+                for zone in zones:
+                    zone.is_visiting(x, y, identifier)
+            for zone in zones:
+                zone.next_frame()
+
+        output = open(f"../../visits{k}.txt", "w")
+        for zone in zones:
+            for i in range(len(zone.statistics)):
+                space = " " if i < len(zone.statistics) - 1 else ""
+                output.write(f"{zone.statistics[i]}{space}")
+            output.write("\n")
+            zone.clear()
+        output.close()

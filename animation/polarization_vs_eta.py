@@ -11,6 +11,7 @@ with (open("../input.txt") as input_file):
     particle_count = int(input_data[0][:-1])
     time_count = int(input_data[5][:-1])
 
+    plt.rcParams.update({'font.size': 20})
     fig, ax = plt.subplots()
     xs = []
     ys = []
@@ -42,6 +43,8 @@ with (open("../input.txt") as input_file):
 
     ax.errorbar(xs, ys, yerr=errors, fmt='o', capsize=5)
 
+    ax.set_xlabel("Ruido", fontdict={"weight": "bold"})
+    ax.set_ylabel("Polarización", fontdict={"weight": "bold"})
     ax.set_xlim(0, 6)
     ax.set_ylim(0, 1)
     plt.xticks(np.arange(0, 6.2, 0.2))

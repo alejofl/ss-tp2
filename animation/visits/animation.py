@@ -1,27 +1,27 @@
 import csv
 import math
 import matplotlib.pyplot as plt
-from matplotlib.colors import hsv_to_rgb
 from matplotlib.animation import FuncAnimation, FFMpegWriter
-import numpy as np
 
 
-def vector_to_rgb(angle):
-    angle = angle % (2 * np.pi)
-    if angle < 0:
-        angle += 2 * np.pi
+def is_inside(zones, x, y):
+    for zone in zones:
+        if (x - float(zone[1])) ** 2 + (y - float(zone[2])) ** 2 <= float(zone[0]) ** 2:
+            return 'g'
+    return 'k'
 
-    return hsv_to_rgb((angle / 2 / np.pi, 1, 0.7))
 
-
-with (open("../times3.txt") as times_file,
-      open("../input.txt") as input_file):
+TIMES_NUMBER = 3
+with (open(f"../../times{TIMES_NUMBER}.txt") as times_file,
+      open("../../input.txt") as input_file,
+      open("../../visits_zones.txt") as zones_file):
     input_data = input_file.readlines()
     particle_count = int(input_data[0][:-1])
     plane_length = int(input_data[1][:-1])
     time_count = int(input_data[5][:-1])
 
     data = list(csv.reader(times_file, delimiter=" "))
+    zones = list(csv.reader(zones_file, delimiter=" "))
 
     times = []
     for i in range(time_count):
@@ -37,11 +37,21 @@ with (open("../times3.txt") as times_file,
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
 
+        for zone in zones:
+            ax.add_patch(
+                plt.Circle(
+                    (float(zone[1]), float(zone[2])),
+                    float(zone[0]),
+                    color='b',
+                    fill=False
+                )
+            )
+
         # Plot each particle
         for particle_data in times[i]:
             x, y, angle = float(particle_data[2]), float(particle_data[3]), float(particle_data[4])
             dx, dy = math.cos(angle), math.sin(angle)
-            ax.quiver(x, y, dx, dy, color=vector_to_rgb(angle), angles='xy', scale_units='xy', scale=5, headaxislength=0, headlength=0, headwidth=0, width=0.0025)
+            ax.quiver(x, y, dx, dy, color=is_inside(zones, x, y), angles='xy', scale_units='xy', scale=5, headaxislength=0, headlength=0, headwidth=0, width=0.0025,)
 
         return ax
 
@@ -50,4 +60,4 @@ with (open("../times3.txt") as times_file,
     # Display the animation
     # plt.show()
     # Save the animation
-    ani.save("../animation_with_color.mp4", writer=FFMpegWriter(fps=30))
+    ani.save("visits_animation.mp4", writer=FFMpegWriter(fps=30))

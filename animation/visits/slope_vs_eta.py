@@ -2,7 +2,7 @@ import csv
 import matplotlib.pyplot as plt
 import numpy as np
 
-
+plt.rcParams.update({'font.size': 20})
 fig, ax = plt.subplots()
 xs = []
 ys = []
@@ -35,8 +35,9 @@ for k in range(len(files)):
 
 ax.errorbar(xs, ys, yerr=errors, fmt='o', capsize=5)
 
+ax.set_xlabel("Ruido", fontdict={"weight": "bold"})
+ax.set_ylabel("Número de visitas por unidad de tiempo", fontdict={"weight": "bold"})
 ax.set_xlim(0, 6)
-plt.xticks(np.arange(0, 6.2, 0.2))
 
 # Display the animation
 plt.show()

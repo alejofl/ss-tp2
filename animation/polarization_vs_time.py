@@ -8,6 +8,7 @@ with (open("../input.txt") as input_file):
     particle_count = int(input_data[0][:-1])
     time_count = int(input_data[5][:-1])
 
+    plt.rcParams.update({'font.size': 20})
     fig, ax = plt.subplots()
     lines = []
 
@@ -33,6 +34,8 @@ with (open("../input.txt") as input_file):
         line, = ax.plot(range(len(polarizations)), polarizations, linewidth=2.0, label=f"\u03B7 = {round(0.2 * k, 1)}")
         lines.append(line)
 
+    ax.set_xlabel("Tiempo (s)", fontdict={"weight": "bold"})
+    ax.set_ylabel("Polarización", fontdict={"weight": "bold"})
     ax.set_xlim(0, time_count)
     ax.set_ylim(0, 1)
     x_step = 1 if time_count < 20 else 5 if time_count < 100 else 10
