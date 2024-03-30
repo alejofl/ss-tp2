@@ -1,0 +1,180 @@
+%! Author = nehue
+%! Date = 30/3/2024
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{lipsum}
+
+
+% Document
+\begin{document}
+
+    \begin{titlepage}
+        \centering
+
+        {\scshape\Large Instituto Tecnológico de Buenos Aires \\ \par}
+        \vspace{1cm}
+
+        {\scshape\huge Trabajo Práctico Nro. 2: Autómatas Celulares \par}
+        \vspace{2cm}
+
+        {\Large\itshape Alejo Flores Lucey - 62511\par}
+        {\Large\itshape Nehuén Gabriel Llanos - 62511\par}
+        \vfill
+
+    \end{titlepage}
+
+    \section{Introducción}
+    En este trabajo práctico
+
+            Somera descripción del sistema
+            real que se intenta simular y rápida pero completa descripción de las ecuaciones del modelo
+            matemático general (sin especificar ninguna sistema particular, ni métodos sobre como se
+            resuelve el modelo).
+
+        \subsection{Sistema Real}
+         En este sistema real
+
+        \subsection{Fundamentos}
+        En este sistema real
+
+    \newpage
+
+    \section{Implementación}
+    Detalle de como se traduce el modelo matemático al modelo computacional,
+    describiendo Arquitectura del código implementado, pseudocódigo, diagrama UML, etc.
+    Solo considerar el motor de simulación propiamente dicho, dejando fuera de esta descripción
+    como se implementa el post-proceso, o el formato de los archivos input/output, etc.
+
+    \newpage
+
+    \section{Simulaciones}
+        \hrulefill\newline
+        CONSIGNA:
+        Descripción del sistema particular que se va a simular y estudiar como
+        geometría, rango de parámetros fijos y variables, inputs y outputs a estudiar. Ilustrar con un
+        esquema el sistema particular que se va a simular.
+        Además, se deben definir los observables que se calcularán a partir del output directo de la
+        simulación (que presenta el estado del sistema para ciertos instantes de tiempo). Estas
+        definiciones deben ser expresadas matemáticamente. Por ejemplo, si se va a promediar una cierta
+        cantidad hay que explicitar cómo se promedia, que se va a estar sumando y sobre qué se estará
+        dividiendo.
+        Detallar el número de repeticiones y tiempos de las simulaciones realizadas.
+        --------------------------------------------------------------------------------------------------
+        \newline
+
+        En esta sección se describirá el sistema particular que se va a simular y estudiar. Para ello, se
+        presentarán aspectos como la geometría, el rango de parámetros fijos y variables, los inputs y outputs
+        y se definirán los observables que se calcularán a partir del output de la simulación.
+
+        Se ha decidido mantener fijos los siguientes parámetros en todas las simulaciones:
+        \begin{itemize}
+            \item $r_c = 1$
+            \item $v = 0,03$
+            \item $L = 5$
+        \end{itemize}
+        Donde los primeros dos tienen los mismos valores que los presentes en el paper de referencia
+        compartido por la cátedra y el último se ha decidido mantener constante para poder realizar comparaciones
+        y observaciones más claras.
+
+        Las simulaciones realizadas buscan obtener resultados sobre como determinados observables escalares varían
+        en función de los parámetros variables. Aquellos obserables a analizar son:
+        \begin{itemize}
+            \item Parámetro de Orden: $v_a$.
+            \item Visitas Periodic Boundary Conditions (PBC): tiempo en el que el nro. de visitas alcanza un dado porcentaje de N.
+            \item Visitas Open Boundary Conditions (OBC): nro. de visitas por unidad de tiempo.
+        \end{itemize}
+        Los parámetros variables son:
+        \begin{itemize}
+            \item $N$: Cantidad de partículas.
+            \item $\eta$: Ruido.
+        \end{itemize}
+
+        A continuación se describirá el sistema particular elegido para cada observable escalar a estudiar.
+
+        \subsection{Parámetro de Orden ($v_a$)}
+            Este primer observable escalar se define como:
+            \begin{equation}
+                v_a = \frac{1}{Nv} \left|\sum_{i=1}^{N} \vec{v_i} \right|
+            \end{equation}
+            Donde N representa la cantidad de partículas y $v$ es el módulo de la velocidad de las mismas. Por último,
+            se tiene al valor absoluto de la sumatoria de todos los vectores $\vec{v_i} \  \backslash \  0 \geq i \leq N$,
+            que representan el vector velocidad de la partícula i-ésima. El valor del Parámetro de Orden tiende a cero
+            (0) cuando las partículas se encuentran en total desorden, por otro lado, tiende a uno (1) cuando las partículas
+            se encuentran polarizadas.
+
+        \subsection{Visitas PBC: tiempo en el que el nro. de visitas alcanza un dado porcentaje de N.}
+            En este caso, la simulación consta de un sistema de partículas que se mueven en una celda de lado $L$,
+            pero con la particularidad de que se tienen cuatro (4) zonas de conteo circulares fijas de radio $0,5$ y la
+            ubicación de las mismas es igual para todas las simulaciones y todos los $\eta$.
+            Al ser un Periodic Boundary Conditions, se consideran los id's de las partículas que ingresan a la zona de
+            conteo y por lo tanto, cada partícula solo debe ser contabilizada una vez al visitar cada zona de medición.
+            El observable a estudiar es el tiempo en el que el número de visitas alcanza el 20\% de N dependiendo
+            del $\eta$ (ruido).
+            \textbf{FALTA LA MATEMATICA DE LOS PROMEDIOS Y DEMAS, MANANA LO HAGO}
+
+        \subsection{Visitas OBC: nro. de visitas por unidad de tiempo.}
+            El sistema que se simula en este caso es el mismo que se describe en el primer apartado de la subsección
+            anterior, pero con la particularidad de que ahora es un Open Boundary Conditions. Esta condición refiere
+            al hecho de que no se considerarán los id's de las partículas a la hora de ingresar a las zonas de conteo,
+            por lo que una misma partícula reingresa a la zona de medición será contabilizada nuevamente.
+            El observable a estudiar es el número de visitas por unidad de tiempo dependiendo del $\eta$ (ruido).
+            \textbf{FALTA LA MATEMATICA DE LOS PROMEDIOS Y DEMAS, MANANA LO HAGO}
+
+
+    \newpage
+
+    \section{Resultados}
+
+    Estructurar la sección de resultados de la siguiente manera.
+    2.4.1 Para cada input o parámetro a estudiar, primero mostrar una animación característica del
+    sistema (pueden ser dos, con dos valores extremos del input para ver ejemplos de distintos
+    comportamientos). La idea de esto es ilustrar la dinámica del sistema para situar el contexto de los
+    resultados a mostrar.
+    2.4.2 Luego mostrar una figura del observable o métrica (que se calcula a partir de los outputs
+    directos de la simulación) en función del tiempo. Explicar entonces cual será el escalar que
+    caracteriza ese proceso (por ejemplo el promedio de la evolución temporal en el estado
+    estacionario, la tasa de crecimiento, etc.). Solo mostrar evoluciones típicas, de valores extremos
+    del rango de parámetros, para validar las definiciones de los observables. Las evoluciones en sí
+    no son los resultados definitivos, por lo tanto no deben ser extenso lo que se muestre de las
+    mismas solo para justificar el observable (escalar) que se calculará a partir de estas.
+    2.4.3 Después presentar la figura del input vs. observable, con promedio y barras de error o tablas
+    con promedio y error.
+    2.4.4 Repetir los pasos desde 2.4.1 hasta 2.4.3 para los otros parámetros o inputs que se
+    estudiaron.
+    2.4.5 Cuando se ajuste una función teórica a los resultados de las simulaciones se debe mostrar
+    como se halló el mejor ajuste en los términos de lo explicado en la Teórica 0.
+    2.4.6 Las Figuras deben tener los datos promedios obtenidos claramente identificados con un
+    símbolo (o la barra de error). No se pueden unir los puntos con lineas sin destacar cuales son los
+    puntos. Estos datos pueden ser opcionalmente unidos por lineas rectas como "guía para el ojo".
+    En ningún caso se puede interpolar los datos con funciones arbitrarias (polinomios, splines) que
+    no provengan de ninguna teoría sobre el sistema que se estudia.
+    2.4.7 Cuando los datos varían en distintos ordenes de magnitud (incluso con potencias negativas,
+    por ejemplo para una función que tiene una asíntota en cero) una escala lineal puede no permitir
+    que se distingan visualmente las diferencias, en esos casos se debe graficar con escala doble
+    logarítmica o semilogarítmica en el eje que corresponda.
+    2.4.8 Durante la presentación en vivo (presencial o virtual) las animaciones debe estar embebidas
+    en la diapositiva correspondiente (no salir de la presentación para mostrarlas con otro programa).
+    Pero en el archivo pdf de la presentación que se debe entregar no debe haber animacionesembebidas, ni tampoco se deben entregar archivos de animaciones. La presentación en formato
+    pdf debe tener una imagen fija de un fotograma representativo de la animación y debajo de este
+    debe estar explícitamente escrito un link a youtube o similar.
+
+
+    \section{Conclusiones}
+
+        Basadas solo en los resultados mostrados, no son conclusiones
+        resultados observados pero no mostrados en resultados, ni hipótesis de posibles explicaciones de
+        lo observado que no hayan sido estudiadas explícitamente, cualquier hipótesis que
+        potencialmente explique lo observado, debe ser probada explícitamente y mostrada en resultados,
+        caso contrario no es válida como conclusión. Tampoco es una conclusión algo que haya quedado
+        por hacer o algo que se haya hecho mal y se descartó.
+        2.6 Puede haber una diapositiva de cierre con algún tipo de agradecimiento", pero no se estila en
+        la misma escribir la palabra "preguntas?"
+
+
+\end{document}
