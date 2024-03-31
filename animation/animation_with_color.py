@@ -14,7 +14,8 @@ def vector_to_rgb(angle):
     return hsv_to_rgb((angle / 2 / np.pi, 1, 0.7))
 
 
-with (open("../times3.txt") as times_file,
+TIMES_NUMBER = 8
+with (open(f"../times{TIMES_NUMBER}.txt") as times_file,
       open("../input.txt") as input_file):
     input_data = input_file.readlines()
     particle_count = int(input_data[0][:-1])
