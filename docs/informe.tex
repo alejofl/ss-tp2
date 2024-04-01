@@ -7,7 +7,7 @@
 \usepackage{lmodern}
 \usepackage{lipsum}
 \usepackage{hyperref}
-
+\usepackage{listings}
 
 % Document
 \begin{document}
@@ -72,6 +72,39 @@
     describiendo Arquitectura del código implementado, pseudocódigo, diagrama UML, etc.
     Solo considerar el motor de simulación propiamente dicho, dejando fuera de esta descripción
     como se implementa el post-proceso, o el formato de los archivos input/output, etc.
+
+    La implementación del modelo matemático de autómatas autopropulsados se realizó en dos lenguajes de programación:
+    \begin{itemize}
+        \item Java: en su versión 19 en conjunto con Maven para la gestión de dependencias.
+        \item Python: en su versión 3.8.5 con las librerías numpy, matplotlib y pandas.
+    \end{itemize}
+
+    Java se utilizó para la implementación del modelo Off Latice, mientras que Python se utilizó para la creación de las
+    animaciones y la obtención de los gráficos que muestran los resultados de los observables estudiados.
+
+    Para iniciar el desarrollo de este modelo computacional, se partió del código realizado en el Trabajo Práctico Nro. 1 que
+    implementaba el Cell Index Method en Java. Este método permite obtener las partículas vecinas de una partícula en específico
+    considerando un radio y un conjunto de celdas determinado. Esta implementación posibilita la obtención del ángulo que tendrá
+    la partícula a analizar en específico luego de verse afectada por los ángulos de aquellas que se consideran vecinas.
+
+    En el proyecto Java se tienen tres clases principales. La primera de ellas es \texttt{MovingParticle}, que extiende de
+    la clase \texttt{Particle} y que representa a una partícula que se mueve en el espacio. Particle es una clase utilizada en el
+    TP1 y que tiene como atributos el radio de la partícula, su posición en el eje $x$, su posición en el eje $y$ y un
+    identificador. \texttt{MovingParticle} hereda todos los atributos mencionados previamente y cuenta con otros dos más que son
+    el ángulo de la partícula y su velocidad en un instante de tiempo.
+
+    La segunda clase principal es \texttt{OffLatticeAutomata}, que representa el modelo de autómatas autopropulsados. La misma cuenta
+    con dos atributos: el ruido que tiene el sistema y una instancia de la clase \texttt{CellIndexMethod} del TP1. El método principal de esta clase
+    es el \texttt{execute()} que se encarga de crear los archivos de salida que contienen la información de las partículas del sistema
+    en cada instante de tiempo teniendo en cuenta los parámetros de entrada del modelo: $N$ (cantidad de partículas), $L$ (longitud
+    del lado del espacio bidimensional), $r_c$ (radio de corte), $v$ (módulo de la velocidad de las partículas), $\eta$ (ruido) y
+    $t$ (la cantidad de frames o tiempos que se quieren simular).
+
+    Por último, la tercera clase principal es \texttt{Main}. Esta se encarga de leer los parámetros de entrada de un archivo input y
+    realizar la ejecución del modelo de autómatas autopropulsados. Con la información de las partículas obtenidas en los archivos
+    output que se generan en este programa, se pueden llevar a cabo las animaciones y los gráficos de los observables estudiados.
+
+
 
     \newpage
 
