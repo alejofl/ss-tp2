@@ -6,6 +6,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{lipsum}
+\usepackage{hyperref}
 
 
 % Document
@@ -27,18 +28,42 @@
     \end{titlepage}
 
     \section{Introducción}
-    En este trabajo práctico
+        En este trabajo práctico se presentará el análisis de la implementación computacional del modelo Off Latice, que busca
+        representar el comportamiento de un sistema de partículas autopropulsadas en un espacio bidimensional. El estudio que se
+        realiza a continuación se basa en el paper \textit{Novel Type of Phase Transition in a System of Self-Driven Particles} de
+        \textit{Tamás Vicsek, András Czirók, Eshel Ben-jacob, Inon Cohen y Ofer Shochet}, publicado en 1995.
 
-            Somera descripción del sistema
-            real que se intenta simular y rápida pero completa descripción de las ecuaciones del modelo
-            matemático general (sin especificar ninguna sistema particular, ni métodos sobre como se
-            resuelve el modelo).
+        La implementación del modelo permite simular el sistema de partículas y definir observables que permiten estudiar el
+        comportamiento del mismo en función de la variación de los parámetros de entrada. En este sentido, se estudiarán los
+        observables Parámetro de Orden, Visitas Periodic Boundary Conditions (PBC) y Visitas Open Boundary Conditions (OBC).
 
         \subsection{Sistema Real}
-         En este sistema real
+
+
+            El modelo Off Latice busca analizar el movimiento de un conjunto de partículas cuando estas interactúan entre sí y
+            como se produce un efecto de agrupamiento entre ellas a medida que el tiempo transcurre. Este fenómeno se lo conoce
+            como movimiento colectivo en la naturaleza y es observado en comportamientos como el vuelo de bandadas de pájaros,
+            el desplazamiento de cardúmenes de peces, entre otros. Además, se manifiesta a nivel microscópico en sistemas como
+            el movimiento de bacterias y las células.
 
         \subsection{Fundamentos}
-        En este sistema real
+
+            El modelo de Bandadas de Agentes Autopropulsados se basa en dos ecuaciones principales. La primera de ellas:
+            \begin{equation}
+                x_i(t+1) = x_i(t) + v_i(t) \Delta t
+            \end{equation}
+            Donde $x_i(t)$ es la posición de la partícula i-ésima en el instante de tiempo $t$, $v_i(t)$ es la velocidad de la partícula i-ésima
+            y $\Delta t$ es el paso de tiempo.
+            Por otro lado, tenemos la segunda ecuación:
+            \begin{equation}
+                \theta(t+1) = \langle \theta(t) \rangle_r+ \Delta \theta
+            \end{equation}
+            Donde $\langle \theta(t) \rangle_r$ es el promedio de los ángulos de todas las partículas dentro de $r$ incluyendo la propia
+            partícula:
+            \begin{equation}
+                \langle \theta(t) \rangle_r = atan2(\langle sin(\theta(t)) \rangle_r, \langle cos(\theta(t)) \rangle_r)
+            \end{equation}
+            y $\Delta \theta$ es el ruido uniforme entre $[-\eta/2, \eta/2]$.
 
     \newpage
 
@@ -113,16 +138,56 @@
             conteo y por lo tanto, cada partícula solo debe ser contabilizada una vez al visitar cada zona de medición.
             El observable a estudiar es el tiempo en el que el número de visitas alcanza el 20\% de N dependiendo
             del $\eta$ (ruido).
-            \textbf{FALTA LA MATEMATICA DE LOS PROMEDIOS Y DEMAS, MANANA LO HAGO}
+            Esta simulación se realiza para cuatro (4) N's distintos ($100$, $300$, $500$ y $1000$) y para cada uno de ellos
+            se varía el $\eta$ en un rango de $0$ a aproximadamente $5,8$ con un paso de $0,2$. Es interesante analizar la
+            obtención de los resultados de las simulaciones puesto que se tienen cuatro (4) zonas circulares fijas ubicadas en lugares
+            distintos. En consecuencia, para poder el obtener el valor del observable, primero se deben promediar los tiempos obtenidos
+            de cada una de las zonas de conteo de la siguiente manera:
+            \begin{equation}
+                t_{\text{prom}} = \frac{1}{4} \sum_{i=1}^{4} t_i \ ,\ t_i\text{: tiempo en la zona }i
+            \end{equation}
+            Al ser un promedio entre cuatro (4) valores, es necesario calcular el error mediante desvío estándar:
+            \begin{equation}
+                \sigma = \sqrt{\frac{1}{4} \sum_{i=1}^{4} (t_i - t_{\text{prom}})^2}
+            \end{equation}
+            Con estos dos valores obtenidos se obtendrá el valor del observable y su error en función del $\eta$ para cada N de los mencionados previamente.
 
-        \subsection{Visitas OBC: nro. de visitas por unidad de tiempo.}
+
+    \subsection{Visitas OBC: nro. de visitas por unidad de tiempo.}
             El sistema que se simula en este caso es el mismo que se describe en el primer apartado de la subsección
             anterior, pero con la particularidad de que ahora es un Open Boundary Conditions. Esta condición refiere
             al hecho de que no se considerarán los id's de las partículas a la hora de ingresar a las zonas de conteo,
             por lo que una misma partícula reingresa a la zona de medición será contabilizada nuevamente.
             El observable a estudiar es el número de visitas por unidad de tiempo dependiendo del $\eta$ (ruido).
-            \textbf{FALTA LA MATEMATICA DE LOS PROMEDIOS Y DEMAS, MANANA LO HAGO}
-
+            Esta simulación, al igual que la descrita en el apartado anterior, se realiza para los mismos cuatro (4) N's
+            ($100$, $300$, $500$ y $1000$) y también se varía el $\eta$ en el mismo rango (de $0$ a aproximadamente $5,8$)
+            con un paso de $0,2$.
+            En primer lugar, se obtienen las curvas de visitas en función de tiempo para cada una de las cuatro (4) zonas de conteo.
+            Posteriormente, se obtiene la recta asociada a cada curva mediante el método de regresión lineal simple, que es un modelo matemático
+            que permite aproximar la relación de dependencia entre una variable independiente $y$ (cantidad de visitas) y un
+            conjunto de variables independientes $x$ (tiempo). La definición de la recta asociada es la siguiente:
+            \begin{equation}
+                y = \beta_0 x + \beta_1
+            \end{equation}
+            Como se puede observar, existen dos coeficientes $\beta_0$ y $\beta_1$ que no se conocen, pero que se pueden obtener mediante
+            los valores de la curva de la siguiente manera:
+            \begin{equation}
+                \beta_0 = \frac{\sum_{i=1}^N x_i y_i - N\bar{x} \bar{y}}{\sum_{i=1}^N x_i^2 - \frac{1}{N} \left(\sum_{i=1}^N x_i \right)^2}
+            \end{equation}
+            \begin{equation}
+                \beta_1 = \frac{\sum_{i=1}^N x_i^2 \ \sum_{i=1}^N y_i - \sum_{i=1}^N x_i y_i\ \sum_{i=1}^N x_i}{N\sum_{i=1}^N x_i^2 - \left(\sum_{i=1}^N x_i \right)^2}
+            \end{equation}
+            Con estos dos coeficientes se obtiene la recta asociada a la curva de visitas en función de tiempo.\newline
+            Con todas las rectas de cada una de las zonas de conteo para un N y $\eta$ particulares, se obtiene el observable
+            de la siguiente manera:
+            \begin{equation}
+                t_{prom}(N,\eta) = \frac{1}{4} \sum_{i=1}^{4} \beta_{0_i}\ , 1 \leq i \leq 4
+            \end{equation}
+            Al ser un promedio debemos obtener el error asociado mediante desvío estándar:
+            \begin{equation}
+                \sigma = \sqrt{\frac{1}{4} \sum_{i=1}^{4} (\beta_{0_i} - t_{prom})^2}
+            \end{equation}
+            Con estos dos valores obtenidos se obtendrá el valor del observable y su error en función del $\eta$ para cada N de los mencionados previamente.
 
     \newpage
 
