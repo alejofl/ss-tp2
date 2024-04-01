@@ -1,5 +1,6 @@
 % Preamble
-\documentclass[11pt]{article}
+\documentclass[11pt, a4paper]{article}
+\usepackage[spanish]{babel}
 
 % Packages
 \usepackage{amsmath}
@@ -12,8 +13,8 @@
 \usepackage{algpseudocode}
 \usepackage{algorithmicx}
 \usepackage{caption}
-\usepackage{lstmisc} % Add caption package for caption setup
-\usepackage{svg}
+\usepackage{graphicx}
+\usepackage{setspace}
 
 % Redefine caption label format
 \captionsetup[algorithm]{labelsep=colon, name=Algoritmo}
@@ -22,18 +23,53 @@
 \begin{document}
 
     \begin{titlepage}
-        \centering
+        \begin{center}
+            \begin{spacing}{1.5}
+                \centering
+                \includegraphics[width=0.2\textwidth]{./itba}
+            \end{spacing}
+            {\scshape\Large Instituto Tecnológico de Buenos Aires}
+            {\rule{\textwidth}{0.4pt}}
+            {\textbf{72.25 - Simulación de Sistemas }}
+        \end{center}
 
-        {\scshape\Large Instituto Tecnológico de Buenos Aires \\ \par}
-        \vspace{1cm}
+        \vspace{35mm}
 
-        {\scshape\huge Trabajo Práctico Nro. 2: Autómatas Celulares \par}
-        \vspace{2cm}
+        \begin{center}
+            \begin{spacing}{1.5}
+                {\LARGE{\textbf{AUTÓMATAS CELULARES: BANDADAS DE AGENTES AUTOPROPULSADOS}}}
+            \end{spacing}
+        \end{center}
 
-        {\Large\itshape Alejo Flores Lucey - 62511\par}
-        {\Large\itshape Nehuén Gabriel Llanos - 62511\par}
-        \vfill
+        \vspace{50mm}
 
+        \begin{minipage}[t]{0.47\textwidth}
+            \begin{center}
+                {\textbf{Alejo Flores Lucey}}
+                \\
+                Legajo 62622
+                \\
+                {afloreslucey@itba.edu.ar}
+            \end{center}
+        \end{minipage}
+        \hfill
+        \begin{minipage}[t]{0.47\textwidth}
+            \begin{center}
+                {\textbf{Nehuén Gabriel Llanos}}
+                \\
+                Legajo 62511
+                \\
+                {nllanos@itba.edu.ar}
+            \end{center}
+        \end{minipage}
+
+        \vspace{25mm}
+
+        \begin{center}
+            {\large{\textbf{2024 1C}}}
+            \\
+            {\large{Grupo Nº3}}
+        \end{center}
     \end{titlepage}
 
     \section{Introducción}
@@ -114,7 +150,7 @@
 
             \begin{figure}[htbp]
                 \centering
-                \includegraphics[height=0.69\textheight]{./Architecture.png}
+                \includegraphics[height=0.69\textheight]{./Architecture}
                 \caption{Arquitectura del código implementado.}
                 \label{fig:my_png}
             \end{figure}
