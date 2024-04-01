@@ -15,6 +15,7 @@
 \usepackage{caption}
 \usepackage{graphicx}
 \usepackage{setspace}
+\usepackage{float}
 
 % Redefine caption label format
 \captionsetup[algorithm]{labelsep=colon, name=Algoritmo}
@@ -71,6 +72,9 @@
             {\large{Grupo Nº3}}
         \end{center}
     \end{titlepage}
+
+    \tableofcontents
+    \newpage
 
     \section{Introducción}
     \label{sec:introduccion}
@@ -194,7 +198,7 @@
 
             \begin{figure}[htbp]
                 \centering
-                \includegraphics[height=0.69\textheight]{./Architecture}
+                \includegraphics[height=0.69\textheight]{./architecture}
                 \caption{Arquitectura del código implementado.}
                 \label{fig:architecture}
             \end{figure}
@@ -384,93 +388,114 @@
     \newpage
 
     \section{Resultados}
+    \label{sec:resultados}
 
-        En esta sección se presentarán los resultados obtenidos de las simulaciones realizadas. Para cada uno de los observables
-        estudiados se mostrarán animaciones calracterística de sistema, figuras del observable en función del tiempo y figuras del
-        observable vs el $\eta$.
+        En esta sección se presentarán los resultados obtenidos de las simulaciones realizadas.
+        Para cada uno de los observables estudiados se mostrarán animaciones características del sistema,
+        figuras del observable en función del tiempo y figuras del observable en función de $\eta$.
 
-        \subsection{Parámetro de Orden ($v_a$)}
+        \subsection{Parámetro de Orden o Polarización ($v_a$)}
+        \label{subsec:resultados-polarizacion}
 
-            En la siguiente imagen se podrá visualizar un fotograma de la animación característica del sistema:
-            En la siguiente imagen se podrá observar un fotograma de la animación característica del sistema, en donde,
-            la densidad $\rho$ es de 60, el ruido $\eta$ es de dos coma cuatro (2,4) y la cantidad de partículas $N$ es de 300.
+            En la Figura~\ref{fig:parametro_orden_1} se podrá observar un fotograma de la animación característica del sistema, en donde,
+            la densidad $\rho$ es igual a sesenta (60), el ruido $\eta$ es de dos coma cuatro (2,4) y la cantidad de partículas $N$ es de 300.
 
-            \begin{figure}[h]
+            \begin{figure}[H]
                 \centering
                 \includegraphics[width=\textwidth]{./animation-n300-eta2p4-frame}
-                \caption{Fotograma de la animación con 300 partículas, ruido 2,4 y densidad 60.}
+                \caption{Fotograma de la animación con 300 partículas, $\eta = 2.4$ y $\rho = 60$.}
                 \label{fig:parametro_orden_1}
             \end{figure}
 
-            En la siguiente figura se muestra el parámetro de orden en función del tiempo para diferentes valores de $\eta$
-            y un $N$ igual a trescientos (300). Se puede observar que a medidad que el ruido aumenta, la polarización
-            adquiere valores estacionarios cada vez más bajos y una variación más pronunciada. También se puede destacar
-            el hecho de que en todos los casos, el observable tiende a un comportamiento estacionario a medida que el tiempo
-            transcurre.
+            Se puede observar que las partículas tienden a moverse en dos direcciones preferenciales, lo que indica que
+            el sistema se encuentra algo polarizado.
 
-            \begin{figure}[h]
+            En la Figura~\ref{fig:parametro_orden_2} se muestra el parámetro de orden en función del tiempo para diferentes valores de $\eta$
+            y un $N$ igual a trescientos (300).
+            Se puede visualizar que a medida que el ruido aumenta, la polarización adquiere valores estacionarios cada
+            vez más bajos y una variación más pronunciada.
+
+            También se puede destacar el hecho de que, en todos los casos, el observable tiende a un comportamiento
+            estacionario a medida que el tiempo transcurre.
+
+            \begin{figure}[H]
                 \centering
                 \includegraphics[width=\textwidth]{./va_vs_time-n300}
-                \caption{Polarización en función del tiempo para $N=300$ y diferentes valores de $\eta$.}
+                \caption{Polarización en función del tiempo para $N = 300$ y diferentes valores de $\eta$.}
                 \label{fig:parametro_orden_2}
             \end{figure}
 
-            Por último, en la figura \ref{fig:parametro_orden_3} que se muestra a continuación se puede observar el promedio del parámetro de orden
-            en el estado estacionario en función del ruido $\eta$ para tres valores de $N$ distintos: 300, 500 y 1000.
+            Por último, en la Figura~\ref{fig:parametro_orden_3}, que se muestra a continuación, se puede observar el
+            promedio del parámetro de orden en el estado estacionario en función del ruido $\eta$ para tres valores de
+            $N$ distintos: $300$, $500$ y $1000$.
             Asimismo, se pueden ver las barras de error asociadas a los diferentes valores del observable.
+            Véase la sección~\ref{subsec:polarizacion} para un análisis más detallado del cálculo de dichos valores.
 
-            \begin{figure}[h]
+            \begin{figure}[H]
                 \centering
                 \includegraphics[width=\textwidth]{./va_vs_eta}
                 \caption{Polarización promedio en estado estacionario en función del ruido $\eta$ para $N=300$, $N=500$ y $N=1000$.}
                 \label{fig:parametro_orden_3}
             \end{figure}
 
-            Analizando la figura y comparando los valores del observable para cada uno de los $N$'s, podemos deducir que
-            cuando el $N$ es mayor, los valores de la polarización son mayores. Además, se puede notar que el error asociado
-            al observable disminuye a medida que el $N$ aumenta, es decir, a medida que la muestra es mayor, el error asociado
-            es menor.
+            Analizando la Figura~\ref{fig:parametro_orden_3} y comparando los valores del observable para cada uno de los $N$s, podemos deducir que
+            cuando $N$ es mayor, los valores de la polarización son mayores.
+            Además, se puede notar que el error asociado al observable disminuye a medida que $N$ aumenta, es decir, a
+            medida que la muestra es mayor, el error asociado es menor.
 
-            Como último comentario, se evidencia un incremento del error entre los valores de $\eta$ tres (3) y cinco (5).
-            La teoría es que estos valores de $\eta$ no son ni muy cercanos al mínimo y tampoco al máximo, lo que genera que
-            la polarización varíe en un rango de valores amplio en el estado estacionario y por lo tanto, genera un error
-            mayor. Esta fluctuación de valores significativa se puede ver en la figura \ref{fig:parametro_orden_2} para el valor de $\eta = 3$ y
-            $\eta = 5.2$. Cuando el ruido es cercano a los extremos, el rango de variación para la polarización es menor y por
+            Como último comentario, se evidencia un incremento del error para los valores de $\eta$ que oscilan tres (3) y cinco (5).
+            La teoría es que estos valores de $\eta$ no son ni muy cercanos al mínimo ni tampoco al máximo, lo que genera que
+            la polarización varíe en un rango de valores amplio en el estado estacionario y, por lo tanto, genere un error
+            mayor.
+            Esta fluctuación de valores significativa se puede ver en la Figura~\ref{fig:parametro_orden_2} para el valor de $\eta = 3$ y
+            $\eta = 5.2$; cuando el ruido es cercano a los extremos, el rango de variación para la polarización es menor y por
             consiguiente, el error también lo es.
 
-%    Estructurar la sección de resultados de la siguiente manera.
-%    2.4.1 Para cada input o parámetro a estudiar, primero mostrar una animación característica del
-%    sistema (pueden ser dos, con dos valores extremos del input para ver ejemplos de distintos
-%    comportamientos). La idea de esto es ilustrar la dinámica del sistema para situar el contexto de los
-%    resultados a mostrar.
-%    2.4.2 Luego mostrar una figura del observable o métrica (que se calcula a partir de los outputs
-%    directos de la simulación) en función del tiempo. Explicar entonces cual será el escalar que
-%    caracteriza ese proceso (por ejemplo el promedio de la evolución temporal en el estado
-%    estacionario, la tasa de crecimiento, etc.). Solo mostrar evoluciones típicas, de valores extremos
-%    del rango de parámetros, para validar las definiciones de los observables. Las evoluciones en sí
-%    no son los resultados definitivos, por lo tanto no deben ser extenso lo que se muestre de las
-%    mismas solo para justificar el observable (escalar) que se calculará a partir de estas.
-%    2.4.3 Después presentar la figura del input vs. observable, con promedio y barras de error o tablas
-%    con promedio y error.
-%    2.4.4 Repetir los pasos desde 2.4.1 hasta 2.4.3 para los otros parámetros o inputs que se
-%    estudiaron.
-%    2.4.5 Cuando se ajuste una función teórica a los resultados de las simulaciones se debe mostrar
-%    como se halló el mejor ajuste en los términos de lo explicado en la Teórica 0.
-%    2.4.6 Las Figuras deben tener los datos promedios obtenidos claramente identificados con un
-%    símbolo (o la barra de error). No se pueden unir los puntos con lineas sin destacar cuales son los
-%    puntos. Estos datos pueden ser opcionalmente unidos por lineas rectas como "guía para el ojo".
-%    En ningún caso se puede interpolar los datos con funciones arbitrarias (polinomios, splines) que
-%    no provengan de ninguna teoría sobre el sistema que se estudia.
-%    2.4.7 Cuando los datos varían en distintos ordenes de magnitud (incluso con potencias negativas,
-%    por ejemplo para una función que tiene una asíntota en cero) una escala lineal puede no permitir
-%    que se distingan visualmente las diferencias, en esos casos se debe graficar con escala doble
-%    logarítmica o semilogarítmica en el eje que corresponda.
-%    2.4.8 Durante la presentación en vivo (presencial o virtual) las animaciones debe estar embebidas
-%    en la diapositiva correspondiente (no salir de la presentación para mostrarlas con otro programa).
-%    Pero en el archivo pdf de la presentación que se debe entregar no debe haber animacionesembebidas, ni tampoco se deben entregar archivos de animaciones. La presentación en formato
-%    pdf debe tener una imagen fija de un fotograma representativo de la animación y debajo de este
-%    debe estar explícitamente escrito un link a youtube o similar.
+        \subsection{Visitas PBC: tiempo en el que el número de visitas alcanza un dado porcentaje de N.}
+        \label{subsec:resultados-visitas-pbc}
 
+            En la Figura~\ref{fig:visitas_pbc_1} se muestra un fotograma de la animación característica del sistema, en donde
+            el número de partículas $N$ es igual a trescientos (300), la longitud del plano $L$ es 5 y el ruido $\eta$ es 0,6.
+            En la misma se pueden observar las partículas, como así también las zonas circulares fijas en las que se contabilizan las visitas.
+            Las partículas que se encuentran en la zona de conteo son coloreadas de color verde.
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=\textwidth]{./animation_visits_pbc-n300-eta0p6-frame}
+                \caption{Fotograma de la animación de visitas con condiciones periódicas de contorno con $300$ partículas, $L = 5$ y $\eta = 0.6$.}
+                \label{fig:visitas_pbc_1}
+            \end{figure}
+
+            En la Figura~\ref{fig:visitas_pbc_2} se muestra el número de visitas totales en función del tiempo.
+            Se pueden visualizar cuatro curvas, cada una correspondiente a una zona de conteo.
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=\textwidth]{./visits_vs_time_pbc-n300-eta0p6}
+                \caption{Cantidad de visitas totales en función del timepo, para $N = 300$, $L = 5$ y $\eta = 0.6$}
+                \label{fig:visitas_pbc_2}
+            \end{figure}
+
+            Se puede observar que las curvas no varían de forma uniforme, sino que depende de la ubicación de las zonas de conteo.
+            Asimismo, podemos señalar que el número de visitas llega a un máximo y luego se mantiene constante; esto se
+            podría deber a que las partículas alcanzan un estado polarizado y ya han sido contabilizadas en esa zona.
+
+            Por último, en la Figura~\ref{fig:visitas_pbc_3} se muestra el tiempo en el que el número de visitas alcanza
+            el 20\% de $N$ en función de $\eta$ para diferentes valores de $N$.
+
+            Se puede visualizar que a medida que el ruido aumenta, el tiempo en el que el número de visitas alcanza
+            el 20\% de N también se incrementa.
+            Además, se puede observar que el tiempo en el que el número de visitas alcanza el 20\% de N es menor a medida que $N$ aumenta.
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=\textwidth]{./threshold_vs_eta-pbc}
+                \caption{Tiempo en el que el número de visitas alcanza el 20\% de N en función de $\eta$ para diferentes valores de $N$}
+                \label{fig:visitas_pbc_3}
+            \end{figure}
+
+            Cabe mencionar que para ciertos valores de $N$ y $\eta$, no se alcanza el umbral del 20\% de $N$ en el tiempo de simulación.
+            Esto se debe al desorden de las partículas, y su poca cantidad.
 
     \section{Conclusiones}
 
