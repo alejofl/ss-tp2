@@ -352,6 +352,7 @@ TSWLatexianTemp*
 *.txt
 !requirements.txt
 *.png
+!docs/*.png
 *.mp4
 *.mov
 out/
