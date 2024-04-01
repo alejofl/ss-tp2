@@ -1,0 +1,89 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class Main {
+    +main(args: String[]): void
+}
+
+class MovingParticle {
+    -velocity: double
+    -angle: double
+    +Builder: Class
+    #MovingParticle(identifier: string, radius: double, x: double, y: double, velocity: double, angle: double)
+    +getVelocity(): double
+    +getAngle(): double
+    +setVelocity(velocity: double): void
+    +setAngle(angle: double): void
+    +equals(obj: Object): boolean
+    +hashCode(): int
+}
+
+class Particle {
+    -identifier: string
+    -radius: double
+    -x: double
+    -y: double
+    +Builder: Class
+    #Particle(identifier: string, radius: double, x: double, y: double)
+    +getIdentifier(): string
+    +getRadius(): double
+    +getX(): double
+    +getY(): double
+    +setX(x: double): void
+    +setY(y: double): void
+    +distanceTo(particle: Particle): double
+    +distanceTo(particle: Particle, boolean borderToBoder): double
+    +distanceWithPeriodicConditionL(particle: Particle, planeLength: double, borderToBoder:boolean): double
+    +toString(): string
+    +equals(obj: Object): boolean
+    +hashCode(): int
+}
+
+class CellIndexMethod<T extends Particle> {
+    -interactionRadius: double
+    -matrixCellCount: int
+    -periodicConditions: boolean
+    -plane: Plane<T>
+    +Builder: Class
+    -CellIndexMethod(interactionRadius: double, matrixCellCount: int, periodicConditions: boolean, plane: Plane<T>)
+    +getInteractionRadius(): double
+    +getMatrixCellCount(): int
+    +isPeriodicConditions(): boolean
+    +getPlane(): Plane<T>
+    +toString(): string
+    -isInsideCell(particle: Particle, cellTopLeftX: double, cellTopLeftY: double, cellBottomRightX: double, cellBottomRightY: double): boolean
+    +execute(): Map<T, Set<T>>
+    +bruteForce(): Map<T, Set<T>>
+}
+
+class OffLaticeAutomata {
+    -cim: CellIndexMethod<MovingParticle>
+    -noise: double
+    +Builder: Class
+    #OffLaticeAutomata(cellIndexMethod: CellIndexMethod<MovingParticle>, noise: double)
+    -calculateNewXPosition(x: double, velocity: double, angle: double): double
+    -calculateNewYPosition(y: double, velocity: double, angle: double): double
+    -calculateNewAngle(angle: double, neighboursAngles: List<Double>): double
+    +execute(t: int): void
+    +execute(t: int, filename: string): void
+    +getCim(): CellIndexMethod<MovingParticle>
+    +getNouse(): double
+}
+
+Class Plane <T extends Particle> {
+    -length: int
+    -particles: List<T>
+    +Builder: Class
+    #Plane(length: int, particles: List<T>)
+    +getLength(): int
+    +getParticles(): List<T>
+    +toString(): string
+}
+
+Particle <|-- MovingParticle
+OffLaticeAutomata *-- CellIndexMethod
+OffLaticeAutomata *-- Particle
+OffLaticeAutomata *-- Plane
+Plane *-- Particle
+Main *-- OffLaticeAutomata
+@enduml

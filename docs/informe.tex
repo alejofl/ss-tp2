@@ -13,6 +13,7 @@
 \usepackage{algorithmicx}
 \usepackage{caption}
 \usepackage{lstmisc} % Add caption package for caption setup
+\usepackage{svg}
 
 % Redefine caption label format
 \captionsetup[algorithm]{labelsep=colon, name=Algoritmo}
@@ -114,6 +115,12 @@
 
         \subsection{Arquitectura}
 
+            \begin{figure}[htbp]
+                \centering
+                \includegraphics[height=0.69\textheight]{./Architecture.png}
+                \caption{Arquitectura del código implementado.}
+                \label{fig:my_png}
+            \end{figure}
 
         \subsection{Algoritmo}
             La simulación del modelo de autómatas autopropulsados se basa en las dos funciones principales descritas en la sección
@@ -145,7 +152,6 @@
             Otro aspecto relevante a mencionar es que la lista formada por objetos del tipo Partícula - ÁngulosVecinas
             tiene copias y no referencias de los ángulos correspondientes a las partículas vecinas. Esto es así para evitar que la actualización de un
             ángulo no se vea afectada por la actualización de otro ángulo en el mismo instante de tiempo.
-
 
     \newpage
 
