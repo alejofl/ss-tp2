@@ -8,6 +8,14 @@
 \usepackage{lipsum}
 \usepackage{hyperref}
 \usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\usepackage{caption}
+\usepackage{lstmisc} % Add caption package for caption setup
+
+% Redefine caption label format
+\captionsetup[algorithm]{labelsep=colon, name=Algoritmo}
 
 % Document
 \begin{document}
@@ -104,6 +112,39 @@
     realizar la ejecución del modelo de autómatas autopropulsados. Con la información de las partículas obtenidas en los archivos
     output que se generan en este programa, se pueden llevar a cabo las animaciones y los gráficos de los observables estudiados.
 
+        \subsection{Arquitectura}
+
+
+        \subsection{Algoritmo}
+            La simulación del modelo de autómatas autopropulsados se basa en las dos funciones principales descritas en la sección
+            de Fundamentos y a continuación se presenta el modelo computacional en pseudo-código que se ha implementado:
+
+            \begin{algorithm}
+                \caption{Off Latice Automata}
+                \begin{algorithmic}[1]
+                    \State Se crea una archivo de salida para el instante de tiempo $t$
+                        \While{$t < t_{max}$}
+                            \State Ejecución de CellIndexMethod
+                            \State Obtención de las partículas vecinas de cada partícula en $t$
+                            \State Creación de una lista de objetos Partícula - ÁngulosVecinas en $t$
+                            \While{Partícula en List de Partículas - ÁngulosVecinas}
+                                \State Cálculo del ángulo promedio de las partículas vecinas
+                                \State Definición del nuevo ángulo de la partícula en $t+1$
+                                \State Actualización de la posición en $x$ de la partícula en $t+1$
+                                \State Actualización de la posición en $y$ de la partícula en $t+1$
+                                \State Incremento del instante de tiempo $t$
+                                \State Escritura de la información de la partícula en archivo output
+                            \EndWhile
+                        \EndWhile
+                \end{algorithmic}
+            \end{algorithm}
+
+            Una observación importante a tener en cuenta es que el \texttt{CellIndexMethod} retorna un mapa, es decir, una estructura
+            que está conformada por una clave y un valor. En este caso, la clave es una partícula y el valor es una lista con todas
+            las partículas vecinas de la misma.
+            Otro aspecto relevante a mencionar es que la lista formada por objetos del tipo Partícula - ÁngulosVecinas
+            tiene copias y no referencias de los ángulos correspondientes a las partículas vecinas. Esto es así para evitar que la actualización de un
+            ángulo no se vea afectada por la actualización de otro ángulo en el mismo instante de tiempo.
 
 
     \newpage
