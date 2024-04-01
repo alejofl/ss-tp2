@@ -37,6 +37,7 @@
     \end{titlepage}
 
     \section{Introducción}
+
         En este trabajo práctico se presentará el análisis de la implementación computacional del modelo Off Latice, que busca
         representar el comportamiento de un sistema de partículas autopropulsadas en un espacio bidimensional. El estudio que se
         realiza a continuación se basa en el paper \textit{Novel Type of Phase Transition in a System of Self-Driven Particles} de
@@ -77,10 +78,6 @@
     \newpage
 
     \section{Implementación}
-    Detalle de como se traduce el modelo matemático al modelo computacional,
-    describiendo Arquitectura del código implementado, pseudocódigo, diagrama UML, etc.
-    Solo considerar el motor de simulación propiamente dicho, dejando fuera de esta descripción
-    como se implementa el post-proceso, o el formato de los archivos input/output, etc.
 
     La implementación del modelo matemático de autómatas autopropulsados se realizó en dos lenguajes de programación:
     \begin{itemize}
@@ -123,6 +120,7 @@
             \end{figure}
 
         \subsection{Algoritmo}
+
             La simulación del modelo de autómatas autopropulsados se basa en las dos funciones principales descritas en la sección
             de Fundamentos y a continuación se presenta el modelo computacional en pseudo-código que se ha implementado:
 
@@ -156,19 +154,6 @@
     \newpage
 
     \section{Simulaciones}
-        \hrulefill\newline
-        CONSIGNA:
-        Descripción del sistema particular que se va a simular y estudiar como
-        geometría, rango de parámetros fijos y variables, inputs y outputs a estudiar. Ilustrar con un
-        esquema el sistema particular que se va a simular.
-        Además, se deben definir los observables que se calcularán a partir del output directo de la
-        simulación (que presenta el estado del sistema para ciertos instantes de tiempo). Estas
-        definiciones deben ser expresadas matemáticamente. Por ejemplo, si se va a promediar una cierta
-        cantidad hay que explicitar cómo se promedia, que se va a estar sumando y sobre qué se estará
-        dividiendo.
-        Detallar el número de repeticiones y tiempos de las simulaciones realizadas.
-        --------------------------------------------------------------------------------------------------
-        \newline
 
         En esta sección se describirá el sistema particular que se va a simular y estudiar. Para ello, se
         presentarán aspectos como la geometría, el rango de parámetros fijos y variables, los inputs y outputs
@@ -214,10 +199,12 @@
             En este caso, la simulación consta de un sistema de partículas que se mueven en una celda de lado $L$,
             pero con la particularidad de que se tienen cuatro (4) zonas de conteo circulares fijas de radio $0,5$ y la
             ubicación de las mismas es igual para todas las simulaciones y todos los $\eta$.
+
             Al ser un Periodic Boundary Conditions, se consideran los id's de las partículas que ingresan a la zona de
             conteo y por lo tanto, cada partícula solo debe ser contabilizada una vez al visitar cada zona de medición.
             El observable a estudiar es el tiempo en el que el número de visitas alcanza el 20\% de N dependiendo
             del $\eta$ (ruido).
+
             Esta simulación se realiza para cuatro (4) N's distintos ($100$, $300$, $500$ y $1000$) y para cada uno de ellos
             se varía el $\eta$ en un rango de $0$ a aproximadamente $5,8$ con un paso de $0,2$. Es interesante analizar la
             obtención de los resultados de las simulaciones puesto que se tienen cuatro (4) zonas circulares fijas ubicadas en lugares
@@ -238,36 +225,51 @@
             anterior, pero con la particularidad de que ahora es un Open Boundary Conditions. Esta condición refiere
             al hecho de que no se considerarán los id's de las partículas a la hora de ingresar a las zonas de conteo,
             por lo que una misma partícula reingresa a la zona de medición será contabilizada nuevamente.
-            El observable a estudiar es el número de visitas por unidad de tiempo dependiendo del $\eta$ (ruido).
+
+            El observable a estudiar es el número de visitas por unidad de tiempo dependiendo del $\eta$ (ruido), es decir,
+            la pendiente de la curva número de visitas vs tiempo en la zona donde esta sea estacionaria.
             Esta simulación, al igual que la descrita en el apartado anterior, se realiza para los mismos cuatro (4) N's
             ($100$, $300$, $500$ y $1000$) y también se varía el $\eta$ en el mismo rango (de $0$ a aproximadamente $5,8$)
             con un paso de $0,2$.
-            En primer lugar, se obtienen las curvas de visitas en función de tiempo para cada una de las cuatro (4) zonas de conteo.
-            Posteriormente, se obtiene la recta asociada a cada curva mediante el método de regresión lineal simple, que es un modelo matemático
-            que permite aproximar la relación de dependencia entre una variable independiente $y$ (cantidad de visitas) y un
-            conjunto de variables independientes $x$ (tiempo). La definición de la recta asociada es la siguiente:
+
+            Como el objetivo es obtener la pendiente de la curva número de visitas vs tiempo, es necesario obtener las curvas
+            de cada una de las cuatro (4) zonas de conteo. Dado que el caracter de estas curvas es no lineal, es imperioso
+            obtener la pendiente de la recta asociada a cada una de ellas mediante el método de regresión lineal simple, que
+            es un método que permite aproximar la relación de dependencia entre una variable independiente $y$ (cantidad de visitas)
+            y un conjunto de variables independientes $x$ (tiempo). La definición de la recta asociada es la siguiente:
             \begin{equation}
                 y = \beta_0 x + \beta_1
             \end{equation}
-            Como se puede observar, existen dos coeficientes $\beta_0$ y $\beta_1$ que no se conocen, pero que se pueden obtener mediante
-            los valores de la curva de la siguiente manera:
+
+            Como se puede observar, existen dos coeficientes $\beta_0$ y $\beta_1$ que no se conocen. Como para el estudio que se
+            está realizando solamente es de interés la pendiente, se puede obviar el cálculo de $\beta_1$ y obtener directamente
+            el valor de $\beta_0$ con la siguiente fórmula:
             \begin{equation}
                 \beta_0 = \frac{\sum_{i=1}^N x_i y_i - N\bar{x} \bar{y}}{\sum_{i=1}^N x_i^2 - \frac{1}{N} \left(\sum_{i=1}^N x_i \right)^2}
             \end{equation}
+
+            Este coeficiente representa el valor de la pendiente de la recta asociada a la curva de visitas en función de tiempo y
+            debido a que es una pendiente, de ahora en más se la llamará $m$:
             \begin{equation}
-                \beta_1 = \frac{\sum_{i=1}^N x_i^2 \ \sum_{i=1}^N y_i - \sum_{i=1}^N x_i y_i\ \sum_{i=1}^N x_i}{N\sum_{i=1}^N x_i^2 - \left(\sum_{i=1}^N x_i \right)^2}
+                m_k = \frac{\sum_{i=1}^N x_i y_i - N\bar{x} \bar{y}}{\sum_{i=1}^N x_i^2 - \frac{1}{N} \left(\sum_{i=1}^N x_i \right)^2}
+                \ , 1 \leq k \leq 4
             \end{equation}
-            Con estos dos coeficientes se obtiene la recta asociada a la curva de visitas en función de tiempo.\newline
-            Con todas las rectas de cada una de las zonas de conteo para un N y $\eta$ particulares, se obtiene el observable
-            de la siguiente manera:
+            En el numerador se tiene a la diferencia entre la sumatoria de los productos de las variables independientes y dependientes
+            y el producto entre $N$ y las medias de las variables independientes y dependientes.
+            Por otro lado, en el denominador se tiene a la diferencia entre la sumatoria de los cuadrados de las variables independientes
+            y el producto entre el inverso de $N$ y la sumatoria de las variables independientes al cuadrado. El $k$ representa la zona
+            de conteo a la que se le está calculando la pendiente.
+
+            Para poder obtener un valor único del observable, es necesario obtener el promedio de las pendientes de las cuatro (4) zonas:
             \begin{equation}
-                t_{prom}(N,\eta) = \frac{1}{4} \sum_{i=1}^{4} \beta_{0_i}\ , 1 \leq i \leq 4
+                m_{prom}(N,\eta) = \frac{1}{4} \sum_{i=1}^{4} m_i \ , 1 \leq i \leq 4
             \end{equation}
-            Al ser un promedio debemos obtener el error asociado mediante desvío estándar:
+            Además, por su condición de promedio debemos obtener el error asociado mediante el desvío estándar:
             \begin{equation}
-                \sigma = \sqrt{\frac{1}{4} \sum_{i=1}^{4} (\beta_{0_i} - t_{prom})^2}
+                \sigma = \sqrt{\frac{1}{4} \sum_{i=1}^{4} (m_i - m_{prom})^2}
             \end{equation}
-            Con estos dos valores obtenidos se obtendrá el valor del observable y su error en función del $\eta$ para cada N de los mencionados previamente.
+            Con estas consideraciones pobremos obtener los diferentes valores del observable en y su error en función del $\eta$
+            para cada N de los mencionados previamente.
 
     \newpage
 
