@@ -7,7 +7,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{caption_2019-09-01}
-
+\usepackage{graphicx}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 \usetheme[compress]{Berlin}
 \setbeamertemplate{page number in head/foot}[framenumber]
 %\setbeamertemplate{footline}[frame number]
@@ -160,11 +162,51 @@
     \section{Implementación}
 
     \begin{frame}{Implementación}
-        Detalle de como se traduce el modelo matemático al modelo computacional,
-        describiendo Arquitectura del código implementado, pseudocódigo, diagrama UML, etc.
-        Solo considerar el motor de simulación propiamente dicho, dejando fuera de esta descripción
-        como se implementa el post-proceso, o el formato de los archivos input/output, etc.
+        \begin{itemize}
+            \item El modelo computacional se realizó en Java y cuenta con tres clases principales:
+            \begin{itemize}
+                \item \texttt{MovingParticle}: extiende de la clase texttt{Particle} del TP1 y representa una partícula
+                el espacio.
+                \item \texttt{OffLatticeAutomata}: representa el modelo de bandadas de agentes autopropulsados y utiliza
+                al código del Cell Index Method realizaodo en el TP1 para la búsqueda de vecinos.
+                \item \texttt{Main}: clase principal que ejecuta la simulación.
+            \end{itemize}
+        \end{itemize}
     \end{frame}
+
+    \subsection{Arquitectura}
+    \begin{frame}{Diagrama UML}
+        \begin{figure}[htbp]
+            \centering
+            \includegraphics[height=0.69\textheight]{./architecture}
+            \caption{Arquitectura del código implementado.}
+            \label{fig:architecture}
+        \end{figure}
+    \end{frame}
+
+    \subsection{Algoritmo}
+    \begin{frame}{Algoritmo}
+        \begin{algorithmic}[1]
+            \small
+            \State Se crea una archivo de salida para la simulación
+            \While{$t < t_{max}$}
+                \State Ejecución de CellIndexMethod
+                \State Obtención de las partículas vecinas de cada partícula en $t$
+                \State Creación de una lista de objetos Partícula - ÁngulosVecinas en $t$
+                \For{Par en lista de Partícula - ÁngulosVecinas}
+                    \State Cálculo del ángulo promedio de las partículas vecinas
+                    \State Definición del nuevo ángulo de la partícula en $t+1$
+                    \State Actualización de la posición en $x$ de la partícula en $t+1$
+                    \State Actualización de la posición en $y$ de la partícula en $t+1$
+                    \State Escritura de la información de la partícula en archivo output
+                \EndFor
+                \State Incremento del instante de tiempo $t$
+            \EndWhile
+        \end{algorithmic}
+        \label{alg:algorithm}
+
+    \end{frame}
+
 
     \section{Simulaciones}
 
