@@ -6,6 +6,7 @@
 \usepackage{amsmath}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{caption_2019-09-01}
 
 \usetheme[compress]{Berlin}
 \setbeamertemplate{page number in head/foot}[framenumber]
@@ -59,7 +60,7 @@
 
     \section{Introducción}
 
-    \begin{frame}{Make Titles Informative.}
+    \begin{frame}{Introducción}
         \begin{itemize}
             \item
             El objetivo es representar el comportamiento de un sistema de partículas autopropulsadas (Off Lattice)
@@ -130,16 +131,29 @@
                     \item Movimiento de bacterias.
                 \end{itemize}
         \end{itemize}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[height=0.25\textheight]{./bandadas_de_aves}
+            \caption{Bandadas de aves.}
+            \label{fig:bandadas_de_aves}
+        \end{figure}
     \end{frame}
 
     \subsection{Fundamentos}
 
     \begin{frame}{Fundamentos}
         \begin{itemize}
-            \item
-            Descripción de las ecuaciones del modelo matemático general.
-            \item
-            Sin especificar ninguna sistema particular, ni métodos sobre como se resuelve el modelo.
+            \item El modelo de Bandadas de Agentes Autopropulsados se basa en dos ecuaciones principales:
+                \begin{equation}
+                    x_i(t+1) = x_i(t) + v_i(t) \Delta t\label{eq:equation1}
+                \end{equation}
+                \begin{equation}
+                    \theta(t+1) = \langle \theta(t) \rangle_r+ \Delta \theta\label{eq:equation2}
+                \end{equation}
+            \item El $\langle \theta(t) \rangle_r$ es el promedio de los ángulos de las partículas vecinas:
+                \begin{equation}
+                    \langle \theta(t) \rangle_r = atan2(\langle sin(\theta(t)) \rangle_r, \langle cos(\theta(t)) \rangle_r)
+                \end{equation}
         \end{itemize}
     \end{frame}
 
