@@ -4,7 +4,7 @@
 
 % Packages
 \usepackage{amsmath}
-%\usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
 \usetheme[compress]{Berlin}
@@ -57,91 +57,219 @@
 % - Talk about 30s to 2min per frame. So there should be between about
 %   15 and 30 frames, all told.
 
-    \section{Introduction}
-
-    \subsection[Short First Subsection Name]{First Subsection Name}
-
-    \begin{frame}{Make Titles Informative. Use Uppercase Letters.}{Subtitles are optional.}
-        % - A title should summarize the slide in an understandable fashion
-        %   for anyone how does not follow everything on the slide itself.
-
-        \begin{itemize}
-            \item
-            Use \texttt{itemize} a lot.
-            \item
-            Use very short sentences or short phrases.
-        \end{itemize}
-    \end{frame}
+    \section{Introducción}
 
     \begin{frame}{Make Titles Informative.}
+        Somera descripción del sistema
+        real que se intenta simular y rápida pero completa descripción de las ecuaciones del modelo
+        matemático general (sin especificar ninguna sistema particular, ni métodos sobre como se
+        resuelve el modelo)
+    \end{frame}
 
-        You can create overlays\dots
+%    \subsection[Short First Subsection Name]{First Subsection Name}
+%
+%    \begin{frame}{Make Titles Informative. Use Uppercase Letters.}{Subtitles are optional.}
+%        % - A title should summarize the slide in an understandable fashion
+%        %   for anyone how does not follow everything on the slide itself.
+%
+%        \begin{itemize}
+%            \item
+%            Use \texttt{itemize} a lot.
+%            \item
+%            Use very short sentences or short phrases.
+%        \end{itemize}
+%    \end{frame}
+%    \begin{frame}{Ejemplo para este frame}
+%
+%        You can create overlays\dots
+%        \begin{itemize}
+%            \item using the \texttt{pause} command:
+%            \begin{itemize}
+%                \item
+%                First item.
+%                \pause
+%                \item
+%                Second item.
+%            \end{itemize}
+%            \item
+%            using overlay specifications:
+%            \begin{itemize}
+%                \item<3->
+%                First item.
+%                \item<4->
+%                Second item.
+%            \end{itemize}
+%            \item
+%            using the general \texttt{uncover} command:
+%            \begin{itemize}
+%                \uncover<5->{\item
+%                First item.}
+%                \uncover<6->{\item
+%                Second item.}
+%            \end{itemize}
+%        \end{itemize}
+%    \end{frame}
+
+
+    \subsection{Sistema Real}
+
+    \begin{frame}{Sistema Real}
         \begin{itemize}
-            \item using the \texttt{pause} command:
-            \begin{itemize}
-                \item
-                First item.
-                \pause
-                \item
-                Second item.
-            \end{itemize}
             \item
-            using overlay specifications:
-            \begin{itemize}
-                \item<3->
-                First item.
-                \item<4->
-                Second item.
-            \end{itemize}
+            Descripción del sistema real que se intenta simular.
             \item
-            using the general \texttt{uncover} command:
-            \begin{itemize}
-                \uncover<5->{\item
-                First item.}
-                \uncover<6->{\item
-                Second item.}
-            \end{itemize}
+            Justificación de la elección del sistema real.
         \end{itemize}
     \end{frame}
 
+    \subsection{Fundamentos}
 
-    \subsection{Second Subsection}
-
-    \begin{frame}{Make Titles Informative.}
-    \end{frame}
-
-    \begin{frame}{Make Titles Informative.}
-    \end{frame}
-
-
-
-    \section*{Summary}
-
-    \begin{frame}{Summary}
-
-        % Keep the summary *very short*.
+    \begin{frame}{Fundamentos}
         \begin{itemize}
             \item
-            The \alert{first main message} of your talk in one or two lines.
+            Descripción de las ecuaciones del modelo matemático general.
             \item
-            The \alert{second main message} of your talk in one or two lines.
-            \item
-            Perhaps a \alert{third message}, but not more than that.
-        \end{itemize}
-
-        % The following outlook is optional.
-        \vskip0pt plus.5fill
-        \begin{itemize}
-            \item
-            Outlook
-            \begin{itemize}
-                \item
-                Something you haven't solved.
-                \item
-                Something else you haven't solved.
-            \end{itemize}
+            Sin especificar ninguna sistema particular, ni métodos sobre como se resuelve el modelo.
         \end{itemize}
     \end{frame}
+
+    \section{Implementación}
+
+    \begin{frame}{Implementación}
+        Detalle de como se traduce el modelo matemático al modelo computacional,
+        describiendo Arquitectura del código implementado, pseudocódigo, diagrama UML, etc.
+        Solo considerar el motor de simulación propiamente dicho, dejando fuera de esta descripción
+        como se implementa el post-proceso, o el formato de los archivos input/output, etc.
+    \end{frame}
+
+    \section{Simulaciones}
+
+    \begin{frame}{Simulaciones}
+        Descripción del sistema particular que se va a simular y estudiar como
+        geometría, rango de parámetros fijos y variables, inputs y outputs a estudiar. Ilustrar con un
+        esquema el sistema particular que se va a simular.
+        Además, se deben definir los observables que se calcularán a partir del output directo de la
+        simulación (que presenta el estado del sistema para ciertos instantes de tiempo). Estas
+        definiciones deben ser expresadas matemáticamente. Por ejemplo, si se va a promediar una cierta
+        cantidad hay que explicitar cómo se promedia, que se va a estar sumando y sobre qué se estará
+        dividiendo.
+        Detallar el número de repeticiones y tiempos de las simulaciones realizadas.
+    \end{frame}
+
+    \section{Resultados}
+
+    \subsection[Parámetro de Orden]{Parámetro de Orden}
+
+    \begin{frame}{Animación}
+        Estructurar la sección de resultados de la siguiente manera.
+        2.4.1 Para cada input o parámetro a estudiar, primero mostrar una animación característica del
+        sistema (pueden ser dos, con dos valores extremos del input para ver ejemplos de distintos
+        comportamientos). La idea de esto es ilustrar la dinámica del sistema para situar el contexto de los
+        resultados a mostrar.
+    \end{frame}
+
+    \begin{frame}{Observable en función del tiempo}
+        2.4.2 Luego mostrar una figura del observable o métrica (que se calcula a partir de los outputs
+        directos de la simulación) en función del tiempo. Explicar entonces cual será el escalar que
+        caracteriza ese proceso (por ejemplo el promedio de la evolución temporal en el estado
+        estacionario, la tasa de crecimiento, etc.). Solo mostrar evoluciones típicas, de valores extremos
+        del rango de parámetros, para validar las definiciones de los observables. Las evoluciones en sí
+        no son los resultados definitivos, por lo tanto no deben ser extenso lo que se muestre de las
+        mismas solo para justificar el observable (escalar) que se calculará a partir de estas.
+    \end{frame}
+
+    \begin{frame}{Input vs observable}
+        2.4.3 Después presentar la figura del input vs. observable, con promedio y barras de error o tablas
+        con promedio y error.
+    \end{frame}
+
+    \subsection[Visitas PBC]{Visitas PBC: Tiempo en el que el nro. de visitas alcanza el 20\% de N}
+
+    \begin{frame}{Animación}
+        Estructurar la sección de resultados de la siguiente manera.
+        2.4.1 Para cada input o parámetro a estudiar, primero mostrar una animación característica del
+        sistema (pueden ser dos, con dos valores extremos del input para ver ejemplos de distintos
+        comportamientos). La idea de esto es ilustrar la dinámica del sistema para situar el contexto de los
+        resultados a mostrar.
+    \end{frame}
+
+    \begin{frame}{Observable en función del tiempo}
+        2.4.2 Luego mostrar una figura del observable o métrica (que se calcula a partir de los outputs
+        directos de la simulación) en función del tiempo. Explicar entonces cual será el escalar que
+        caracteriza ese proceso (por ejemplo el promedio de la evolución temporal en el estado
+        estacionario, la tasa de crecimiento, etc.). Solo mostrar evoluciones típicas, de valores extremos
+        del rango de parámetros, para validar las definiciones de los observables. Las evoluciones en sí
+        no son los resultados definitivos, por lo tanto no deben ser extenso lo que se muestre de las
+        mismas solo para justificar el observable (escalar) que se calculará a partir de estas.
+    \end{frame}
+
+    \begin{frame}{Input vs observable}
+        2.4.3 Después presentar la figura del input vs. observable, con promedio y barras de error o tablas
+        con promedio y error.
+    \end{frame}
+
+    \subsection[Visitas OBC]{Visitas OBC: Nro. de visitas por unidad de tiempo}
+
+    \begin{frame}{Animación}
+        Estructurar la sección de resultados de la siguiente manera.
+        2.4.1 Para cada input o parámetro a estudiar, primero mostrar una animación característica del
+        sistema (pueden ser dos, con dos valores extremos del input para ver ejemplos de distintos
+        comportamientos). La idea de esto es ilustrar la dinámica del sistema para situar el contexto de los
+        resultados a mostrar.
+    \end{frame}
+
+    \begin{frame}{Observable en función del tiempo}
+        2.4.2 Luego mostrar una figura del observable o métrica (que se calcula a partir de los outputs
+        directos de la simulación) en función del tiempo. Explicar entonces cual será el escalar que
+        caracteriza ese proceso (por ejemplo el promedio de la evolución temporal en el estado
+        estacionario, la tasa de crecimiento, etc.). Solo mostrar evoluciones típicas, de valores extremos
+        del rango de parámetros, para validar las definiciones de los observables. Las evoluciones en sí
+        no son los resultados definitivos, por lo tanto no deben ser extenso lo que se muestre de las
+        mismas solo para justificar el observable (escalar) que se calculará a partir de estas.
+    \end{frame}
+
+    \begin{frame}{Input vs observable}
+        2.4.3 Después presentar la figura del input vs. observable, con promedio y barras de error o tablas
+        con promedio y error.
+    \end{frame}
+
+
+    \section{Conclusiones}
+
+    \begin{frame}{Conclusiones}
+        (1 diapositiva): Basadas solo en los resultados mostrados, no son conclusiones
+        resultados observados pero no mostrados en resultados, ni hipótesis de posibles explicaciones de
+        lo observado que no hayan sido estudiadas explícitamente, cualquier hipótesis que
+        potencialmente explique lo observado, debe ser probada explícitamente y mostrada en resultados,
+        caso contrario no es válida como conclusión. Tampoco es una conclusión algo que haya quedado
+        por hacer o algo que se haya hecho mal y se descartó.
+    \end{frame}
+
+%    \begin{frame}{Conclusiones}
+%
+%        % Keep the summary *very short*.
+%        \begin{itemize}
+%            \item
+%            The \alert{first main message} of your talk in one or two lines.
+%            \item
+%            The \alert{second main message} of your talk in one or two lines.
+%            \item
+%            Perhaps a \alert{third message}, but not more than that.
+%        \end{itemize}
+%
+%        % The following outlook is optional.
+%        \vskip0pt plus.5fill
+%        \begin{itemize}
+%            \item
+%            Outlook
+%            \begin{itemize}
+%                \item
+%                Something you haven't solved.
+%                \item
+%                Something else you haven't solved.
+%            \end{itemize}
+%        \end{itemize}
+%    \end{frame}
 
 
 \end{document}
