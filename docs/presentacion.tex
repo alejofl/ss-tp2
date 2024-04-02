@@ -125,20 +125,25 @@
             \item
             El modelo Off Lattice busca analizar el movimiento de un conjunto de partículas y cómo se produce un efecto
             de agrupamiento cuando interactúan entre sí.
-            \item
-            Este fenómeno en la naturaleza se lo conoce como movimiento colectivo y es observable en:
+        \end{itemize}
+        \begin{minipage}[t]{0.5\textwidth}
+            \begin{itemize}
+                \item
+                Este fenómeno se observa en la naturaleza en:
                 \begin{itemize}
-                    \item Bandadas de pájaros.
+                    \item Bandadas de aves.
                     \item Cardúmenes de peces.
                     \item Movimiento de bacterias.
                 \end{itemize}
-        \end{itemize}
-        \begin{figure}[H]
-            \centering
-            \includegraphics[height=0.25\textheight]{./bandadas_de_aves}
-            \caption{Bandadas de aves.}
-            \label{fig:bandadas_de_aves}
-        \end{figure}
+            \end{itemize}
+        \end{minipage}
+        \begin{minipage}[t]{0.45\textwidth}
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=\linewidth]{./bandadas_de_aves}
+                \label{fig:bandadas_de_aves}
+            \end{figure}
+        \end{minipage}
     \end{frame}
 
     \subsection{Fundamentos}
@@ -165,10 +170,9 @@
         \begin{itemize}
             \item El modelo computacional se realizó en Java y cuenta con tres clases principales:
             \begin{itemize}
-                \item \texttt{MovingParticle}: extiende de la clase texttt{Particle} del TP1 y representa una partícula
-                el espacio.
-                \item \texttt{OffLatticeAutomata}: representa el modelo de bandadas de agentes autopropulsados y utiliza
-                al código del Cell Index Method realizaodo en el TP1 para la búsqueda de vecinos.
+                \item \texttt{MovingParticle}: representa una partícula
+                en el espacio.
+                \item \texttt{OffLatticeAutomata}: representa el modelo de bandadas de agentes autopropulsados.
                 \item \texttt{Main}: clase principal que ejecuta la simulación.
             \end{itemize}
         \end{itemize}
@@ -179,7 +183,6 @@
         \begin{figure}[htbp]
             \centering
             \includegraphics[height=0.69\textheight]{./architecture}
-            \caption{Arquitectura del código implementado.}
             \label{fig:architecture}
         \end{figure}
     \end{frame}
@@ -188,17 +191,17 @@
     \begin{frame}{Algoritmo}
         \begin{algorithmic}[1]
             \small
-            \State Se crea una archivo de salida para la simulación
+            \State Creación output de la simulación
             \While{$t < t_{max}$}
-                \State Ejecución de CellIndexMethod
-                \State Obtención de las partículas vecinas de cada partícula en $t$
-                \State Creación de una lista de objetos Partícula - ÁngulosVecinas en $t$
+                \State CellIndexMethod()
+                \State Obtención partículas vecinas de cada partícula en $t$
+                \State Creación lista de objetos Partícula - ÁngulosVecinas en $t$
                 \For{Par en lista de Partícula - ÁngulosVecinas}
-                    \State Cálculo del ángulo promedio de las partículas vecinas
-                    \State Definición del nuevo ángulo de la partícula en $t+1$
-                    \State Actualización de la posición en $x$ de la partícula en $t+1$
-                    \State Actualización de la posición en $y$ de la partícula en $t+1$
-                    \State Escritura de la información de la partícula en archivo output
+                    \State Cálculo ángulo promedio de las partículas vecinas
+                    \State Definición nuevo ángulo de la partícula en $t+1$
+                    \State Actualización posición $x$ de la partícula en $t+1$
+                    \State Actualización posición $y$ de la partícula en $t+1$
+                    \State Escritura de información en output
                 \EndFor
                 \State Incremento del instante de tiempo $t$
             \EndWhile
