@@ -6,13 +6,11 @@
 \usepackage{amsmath}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{caption_2019-09-01}
 \usepackage{graphicx}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
 \usetheme[compress]{Berlin}
 \setbeamertemplate{page number in head/foot}[framenumber]
-%\setbeamertemplate{footline}[frame number]
 
 \title[Autómatas Celulares]{Autómatas Celulares: Bandadas de Agentes Autopropulsados}
 \subtitle{72.25 - Simulación de Sistemas}
@@ -182,13 +180,13 @@
     \begin{frame}{Diagrama UML}
         \begin{figure}[htbp]
             \centering
-            \includegraphics[height=0.69\textheight]{./architecture}
+            \includegraphics[width=\textwidth]{./architecture-landscape}
             \label{fig:architecture}
         \end{figure}
     \end{frame}
 
     \subsection{Algoritmo}
-    \begin{frame}{Algoritmo}
+    \begin{frame}{Autómata Off Lattice}
         \begin{algorithmic}[1]
             \small
             \State Creación output de la simulación
