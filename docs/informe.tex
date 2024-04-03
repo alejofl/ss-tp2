@@ -215,20 +215,20 @@
             \begin{algorithm}
                 \caption{Autómata Off Lattice}
                 \begin{algorithmic}[1]
-                    \State Se crea una archivo de salida para la simulación
-                        \While{$t < t_{max}$}
-                            \State Ejecución de CellIndexMethod
-                            \State Obtención de las partículas vecinas de cada partícula en $t$
-                            \State Creación de una lista de objetos Partícula - ÁngulosVecinas en $t$
-                            \For{Par en lista de Partícula - ÁngulosVecinas}
-                                \State Cálculo del ángulo promedio de las partículas vecinas
-                                \State Definición del nuevo ángulo de la partícula en $t+1$
-                                \State Actualización de la posición en $x$ de la partícula en $t+1$
-                                \State Actualización de la posición en $y$ de la partícula en $t+1$
-                                \State Escritura de la información de la partícula en archivo output
-                            \EndFor
-                            \State Incremento del instante de tiempo $t$
-                        \EndWhile
+                    \State Create output file
+                    \While{$t < t_{max}$}
+                        \State neighbours $\gets$ \Call{CellIndexMethod()}{}
+                        \State list$_{\text{particle, angles}}$ $\gets$ \Call{Map}{neighbours}
+                        \Comment{En $t$}
+                        \ForAll{(particle, angles) $\in$ list}
+                            \State $\theta_{\text{new}} \gets$ \Call{NewAngle}{particle, angles}
+                            \State \Call{UpdateAngle}{particle, $\theta_{\text{new}}$}
+                            \State \Call{UpdateXPosition}{particle, $\theta_{\text{new}}$}
+                            \State \Call{UpdateYPosition}{particle, $\theta_{\text{new}}$}
+                            \State Write output for $t$
+                        \EndFor
+                        \State $t \gets t + 1$
+                    \EndWhile
                 \end{algorithmic}
                 \label{alg:algorithm}
             \end{algorithm}
@@ -399,7 +399,7 @@
         \label{subsec:resultados-polarizacion}
 
             En la Figura~\ref{fig:parametro_orden_1} se podrá observar un fotograma de la animación característica del sistema, en donde,
-            la densidad $\rho$ es igual a sesenta (12), el ruido $\eta$ es de dos coma cuatro (2,4) y la cantidad de partículas $N$ es de 300.
+            la densidad $\rho$ es igual a doce (12), el ruido $\eta$ es de dos coma cuatro (2,4) y la cantidad de partículas $N$ es de 300.
 
             \begin{figure}[H]
                 \centering
