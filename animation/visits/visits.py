@@ -1,6 +1,6 @@
 import csv
 import random
-
+import os
 
 class Zone:
     def __init__(self, x, y, radius, is_pbc):
@@ -11,30 +11,34 @@ class Zone:
         self.last_visitors = []
         self.current_visitors = []
         self.statistics = []
+        self.current_visits = 0
 
     def contains(self, x, y):
         return (x - self.x) ** 2 + (y - self.y) ** 2 <= self.radius ** 2
 
     def is_visiting(self, x, y, identifier):
-        if self.contains(x, y) and identifier not in self.last_visitors:
+        if self.contains(x, y):
+            if identifier not in self.last_visitors:
+                self.current_visits += 1
             self.current_visitors.append(identifier)
             return True
         return False
 
     def next_frame(self):
         previous_statistics = self.statistics[-1] if len(self.statistics) > 0 else 0
-        self.statistics.append(previous_statistics + len(self.current_visitors))
+        self.statistics.append(previous_statistics + self.current_visits)
         if self.is_pbc:
             self.last_visitors += self.current_visitors
         else:
             self.last_visitors = self.current_visitors
         self.current_visitors = []
+        self.current_visits = 0
 
     def clear(self):
         self.last_visitors = []
         self.current_visitors = []
         self.statistics = []
-
+        self.current_visits = 0
 
 with (open("../../input.txt") as input_file,
       open("../../visits_input.txt") as visits_file):
