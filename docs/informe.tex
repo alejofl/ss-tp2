@@ -160,7 +160,7 @@
         Por otro lado, Python se utilizó para la creación de animaciones y el cálculo y visualización de los observables
         estudiados.
 
-        Para iniciar el desarrollo de este modelo computacional, se partió del código realizado en el Trabajo Práctico Nro\. 1 que
+        Para iniciar el desarrollo de este modelo computacional, se partió del código realizado en el Trabajo Práctico Nro. 1 que
         implementaba el \textit{Cell Index Method} en Java.
         Este método permite obtener las partículas vecinas de una partícula en específico considerando un radio y un conjunto de celdas determinado.
         Esta implementación posibilita la obtención del ángulo que tendrá la partícula a analizar en específico luego de verse afectada por los ángulos de aquellas que se consideran vecinas.
@@ -285,7 +285,7 @@
             \end{equation}
 
             Donde $N$ representa la cantidad de partículas y $v$ es el módulo de la velocidad de las mismas.
-            Por último, se tiene la norma de la sumatoria de todos los vectores $\vec{v_i} \ / \  0 \geq i \leq N$,
+            Por último, se tiene la norma de la sumatoria de todos los vectores $\vec{v_i} \ / \  0 \geq i < N$,
             que representan el vector velocidad de la partícula i-ésima.
             El valor del parámetro de orden tiende a cero (0) cuando las partículas se encuentran en total desorden;
             por otro lado, tiende a uno (1) cuando las partículas se encuentran polarizadas, es decir, se trasladan en la misma dirección.
@@ -328,7 +328,7 @@
 
             El sistema que se simula en este caso es el mismo que se describe en el primer apartado de la subsección
             anterior, pero con la particularidad de que ahora se realiza con condiciones abiertas de contorno.
-            Esta condición refiere al hecho de que no se los identificadores de las partículas no se considerarán inmutables.
+            Esta condición refiere al hecho de que los identificadores de las partículas no se considerarán inmutables.
             Esto significa que, a la hora de reingresar a las zonas de conteo, una misma partícula será contabilizada nuevamente.
 
             El observable a estudiar es el número de visitas por unidad de tiempo dependiendo de $\eta$ (ruido), es decir,
@@ -364,10 +364,10 @@
                 \ , 1 \leq k \leq 4
             \end{equation}
 
-            En el numerador se tiene a la diferencia entre la sumatoria de los productos de las variables independientes y dependientes
-            y el producto entre $N$ y las medias de las variables independientes y dependientes.
-            Por otro lado, en el denominador se tiene a la diferencia entre la sumatoria de los cuadrados de las variables independientes
-            y el producto entre el inverso de $N$ y la sumatoria de las variables independientes al cuadrado.
+            En el numerador se tiene a la diferencia entre el producto entre $N$ y la sumatoria de las variables dependientes e independientes
+            y la sumatoria de los productos de las variables independientes y dependientes.
+            Por otro lado, en el denominador se tiene a la diferencia entre el producto entre $N$ y la sumatoria de los
+            cuadrados de las variables independientes y el cuadrado de la sumatoria de las variables independientes.
             $k$ representa la zona de conteo a la que se le está calculando la pendiente.
 
             Para poder obtener un valor único del observable, es necesario obtener el promedio de las pendientes de las cuatro (4) zonas:
@@ -399,12 +399,12 @@
         \label{subsec:resultados-polarizacion}
 
             En la Figura~\ref{fig:parametro_orden_1} se podrá observar un fotograma de la animación característica del sistema, en donde,
-            la densidad $\rho$ es igual a sesenta (60), el ruido $\eta$ es de dos coma cuatro (2,4) y la cantidad de partículas $N$ es de 300.
+            la densidad $\rho$ es igual a sesenta (12), el ruido $\eta$ es de dos coma cuatro (2,4) y la cantidad de partículas $N$ es de 300.
 
             \begin{figure}[H]
                 \centering
                 \includegraphics[width=\textwidth]{./animation-n300-eta2p4-frame}
-                \caption{Fotograma de la animación con 300 partículas, $\eta = 2.4$ y $\rho = 60$.\\Véase la animación completa \href{https://youtu.be/aZ9eOtlXgQw}{aquí}.}
+                \caption{Fotograma de la animación con 300 partículas, $\eta = 2.4$ y $\rho = 12$.\\Véase la animación completa \href{https://youtu.be/aZ9eOtlXgQw}{aquí}.}
                 \label{fig:parametro_orden_1}
             \end{figure}
 
@@ -561,7 +561,7 @@
         Se ha estudiado el comportamiento del sistema en función de la cantidad de partículas y el ruido del mismo, así como
         también cómo las partículas atraviesan zonas circulares fijas en el espacio bidimensional, tanto en condiciones
         periódicas de contorno (PBC) como condiciones abiertas de contorno (OBC).
-        
+
         Para el estudio de la polarización del sistema en función del ruido proporcionado, se concluye que a medida que
         el ruido aumenta, el parámetro de orden del sistema disminuye, lo que indica que las partículas se encuentran en
         un estado de mayor desorden.
