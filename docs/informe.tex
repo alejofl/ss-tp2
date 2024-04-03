@@ -329,7 +329,9 @@
             El sistema que se simula en este caso es el mismo que se describe en el primer apartado de la subsección
             anterior, pero con la particularidad de que ahora se realiza con condiciones abiertas de contorno.
             Esta condición refiere al hecho de que los identificadores de las partículas no se considerarán inmutables.
-            Esto significa que, a la hora de reingresar a las zonas de conteo, una misma partícula será contabilizada nuevamente.
+            Cuando las partículas atraviesen las paredes del plano del sistema cambiarán su identificador. Esto genera
+            que las partículas que no hayan atravesado paredes solo pueden ser contadas una vez en cada zona de medición,
+            pero si en cambio salieron de los límites serán contabilizadas nuevamente.
 
             El observable a estudiar es el número de visitas por unidad de tiempo dependiendo de $\eta$ (ruido), es decir,
             la pendiente de la curva número de visitas en función del tiempo en la zona donde dicho valor sea estacionario.
