@@ -1,50 +1,43 @@
 import csv
 import random
-import os
+
 
 class Zone:
-    def __init__(self, x, y, radius, is_pbc):
+    def __init__(self, x, y, radius):
         self.x = x
         self.y = y
         self.radius = radius
-        self.is_pbc = is_pbc
         self.last_visitors = []
         self.current_visitors = []
         self.statistics = []
-        self.current_visits = 0
 
     def contains(self, x, y):
         return (x - self.x) ** 2 + (y - self.y) ** 2 <= self.radius ** 2
 
     def is_visiting(self, x, y, identifier):
-        if self.contains(x, y):
-            if identifier not in self.last_visitors:
-                self.current_visits += 1
+        if self.contains(x, y) and identifier not in self.last_visitors:
             self.current_visitors.append(identifier)
             return True
         return False
 
     def next_frame(self):
         previous_statistics = self.statistics[-1] if len(self.statistics) > 0 else 0
-        self.statistics.append(previous_statistics + self.current_visits)
-        if self.is_pbc:
-            self.last_visitors += self.current_visitors
-        else:
-            self.last_visitors = self.current_visitors
+        self.statistics.append(previous_statistics + len(self.current_visitors))
+        self.last_visitors += self.current_visitors
         self.current_visitors = []
-        self.current_visits = 0
 
     def clear(self):
         self.last_visitors = []
         self.current_visitors = []
         self.statistics = []
-        self.current_visits = 0
+
 
 with (open("../../input.txt") as input_file,
       open("../../visits_input.txt") as visits_file):
     input_data = input_file.readlines()
     particle_count = int(input_data[0][:-1])
     plane_length = int(input_data[1][:-1])
+    velocity = float(input_data[3][:-1])
     time_count = int(input_data[5][:-1])
 
     visits_data = visits_file.readlines()
@@ -54,7 +47,7 @@ with (open("../../input.txt") as input_file,
 
     zones = []
     for i in range(zones_count):
-        zones.append(Zone(random.uniform(0, plane_length), random.uniform(0, plane_length), zones_radius, is_pbc))
+        zones.append(Zone(random.uniform(0, plane_length), random.uniform(0, plane_length), zones_radius))
 
     zones_file = open(f"../../visits_zones.txt", "w")
     for zone in zones:
@@ -68,6 +61,22 @@ with (open("../../input.txt") as input_file,
         times = []
         for i in range(time_count):
             times.append(data[i * particle_count:(i + 1) * particle_count])
+
+        if not is_pbc:
+            last_used_id = particle_count
+            for i in range(1, len(times)):
+                for j in range(particle_count):
+                    current_x = round(float(times[i][j][2]))
+                    current_y = round(float(times[i][j][3]))
+                    previous_x = round(float(times[i - 1][j][2]))
+                    previous_y = round(float(times[i - 1][j][3]))
+
+                    crossed_x_walls = (current_x == 0 and previous_x == plane_length - 1) or (current_x == plane_length - 1 and previous_x == 0)
+                    crossed_y_walls = (current_y == 0 and previous_y == plane_length - 1) or (current_y == plane_length - 1 and previous_y == 0)
+
+                    if crossed_x_walls or crossed_y_walls:
+                        times[i][j][1] = f"p_{last_used_id}"
+                        last_used_id += 1
 
         for time in times:
             for particle_data in time:
