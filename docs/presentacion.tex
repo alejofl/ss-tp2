@@ -9,6 +9,11 @@
 \usepackage{graphicx}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
+\usepackage{caption}
+\usepackage{courier}
+
+\captionsetup{justification=centering, font={scriptsize}, skip=0pt}
+
 \usetheme[compress]{Berlin}
 \setbeamertemplate{page number in head/foot}[framenumber]
 
@@ -26,15 +31,24 @@
     Legajo 62511
 }
 \date{2024 1C | Grupo Nº3}
-
-\pgfdeclareimage[height=0.5cm]{university-logo}{itba}
-\logo{\pgfuseimage{university-logo}}
+\titlegraphic{\includegraphics[height=0.5cm]{./itba}}
 
 % If you wish to uncover everything in a step-wise fashion, uncomment
 % the following command:
 
 %\beamerdefaultoverlayspecification{<+->}
 
+\makeatletter
+\beamer@theme@subsectionfalse
+\makeatother
+
+\AtBeginSection[]{
+    \begin{frame}
+        \begin{beamercolorbox}[sep=8pt,center]{title}
+            \usebeamerfont{title}\insertsection
+        \end{beamercolorbox}
+    \end{frame}
+}
 
 \begin{document}
 
@@ -44,299 +58,426 @@
 
     \begin{frame}{Outline}
         \tableofcontents
-        % You might wish to add the option [pausesections]
     \end{frame}
-
-
-% Since this a solution template for a generic talk, very little can
-% be said about how it should be structured. However, the talk length
-% of between 15min and 45min and the theme suggest that you stick to
-% the following rules:
-
-% - Exactly two or three sections (other than the summary).
-% - At *most* three subsections per section.
-% - Talk about 30s to 2min per frame. So there should be between about
-%   15 and 30 frames, all told.
 
     \section{Introducción}
 
-    \begin{frame}{Introducción}
-        \begin{itemize}
-            \item
-            El objetivo es representar el comportamiento de un sistema de partículas autopropulsadas (Off Lattice)
-            en un espacio bidimensional.
-            \item
-            La implementación del modelo permite simular el sistema de partículas.
-            \item
-            Se definen observables que caracterizan el comportamiento del sistema.
-        \end{itemize}
-    \end{frame}
-
-%    \subsection[Short First Subsection Name]{First Subsection Name}
-%
-%    \begin{frame}{Make Titles Informative. Use Uppercase Letters.}{Subtitles are optional.}
-%        % - A title should summarize the slide in an understandable fashion
-%        %   for anyone how does not follow everything on the slide itself.
-%
-%        \begin{itemize}
-%            \item
-%            Use \texttt{itemize} a lot.
-%            \item
-%            Use very short sentences or short phrases.
-%        \end{itemize}
-%    \end{frame}
-%    \begin{frame}{Ejemplo para este frame}
-%
-%        You can create overlays\dots
-%        \begin{itemize}
-%            \item using the \texttt{pause} command:
-%            \begin{itemize}
-%                \item
-%                First item.
-%                \pause
-%                \item
-%                Second item.
-%            \end{itemize}
-%            \item
-%            using overlay specifications:
-%            \begin{itemize}
-%                \item<3->
-%                First item.
-%                \item<4->
-%                Second item.
-%            \end{itemize}
-%            \item
-%            using the general \texttt{uncover} command:
-%            \begin{itemize}
-%                \uncover<5->{\item
-%                First item.}
-%                \uncover<6->{\item
-%                Second item.}
-%            \end{itemize}
-%        \end{itemize}
-%    \end{frame}
-
-    \subsection{Sistema Real}
-
-    \begin{frame}{Sistema Real}
-        \begin{itemize}
-            \item
-            El modelo Off Lattice busca analizar el movimiento de un conjunto de partículas y cómo se produce un efecto
-            de agrupamiento cuando interactúan entre sí.
-        \end{itemize}
-        \begin{minipage}[t]{0.5\textwidth}
+        \begin{frame}{Introducción}
             \begin{itemize}
-                \item
-                Este fenómeno se observa en la naturaleza en:
-                \begin{itemize}
-                    \item Bandadas de aves.
-                    \item Cardúmenes de peces.
-                    \item Movimiento de bacterias.
-                \end{itemize}
+                \item El objetivo es representar el comportamiento de un sistema de partículas autopropulsadas
+                (Off Lattice) en un espacio bidimensional.
+                \item La implementación del modelo permite simular el sistema de partículas y su interacción.
+                \item Se definen observables para el comportamiento del sistema ante ciertos parámetros.
             \end{itemize}
-        \end{minipage}
-        \begin{minipage}[t]{0.45\textwidth}
-            \begin{figure}[H]
-                \centering
-                \includegraphics[width=\linewidth]{./bandadas_de_aves}
-                \label{fig:bandadas_de_aves}
-            \end{figure}
-        \end{minipage}
-    \end{frame}
+        \end{frame}
 
-    \subsection{Fundamentos}
+        \subsection{Sistema Real}
 
-    \begin{frame}{Fundamentos}
-        \begin{itemize}
-            \item El modelo de Bandadas de Agentes Autopropulsados se basa en dos ecuaciones principales:
-                \begin{equation}
-                    x_i(t+1) = x_i(t) + v_i(t) \Delta t\label{eq:equation1}
-                \end{equation}
-                \begin{equation}
-                    \theta(t+1) = \langle \theta(t) \rangle_r+ \Delta \theta\label{eq:equation2}
-                \end{equation}
-            \item El $\langle \theta(t) \rangle_r$ es el promedio de los ángulos de las partículas vecinas:
-                \begin{equation}
-                    \langle \theta(t) \rangle_r = atan2(\langle sin(\theta(t)) \rangle_r, \langle cos(\theta(t)) \rangle_r)
-                \end{equation}
-        \end{itemize}
-    \end{frame}
+            \begin{frame}{Sistema Real}
+                \begin{itemize}
+                    \item El modelo Off Lattice busca analizar el movimiento de un conjunto de partículas y cómo se
+                    produce un efecto de agrupamiento cuando interactúan entre sí.
+                \end{itemize}
+                \begin{minipage}[t]{0.5\textwidth}
+                    \begin{itemize}
+                        \item Este fenómeno se observa en la naturaleza en:
+                        \begin{itemize}
+                            \item Bandadas de aves.
+                            \item Cardúmenes de peces.
+                            \item Movimiento de bacterias.
+                        \end{itemize}
+                    \end{itemize}
+                \end{minipage}
+                \hfill
+                \begin{minipage}[t]{0.45\textwidth}
+                    \begin{figure}[H]
+                        \centering
+                        \includegraphics[width=\linewidth]{./bandadas_de_aves}
+                        \label{fig:bandadas_de_aves}
+                    \end{figure}
+                \end{minipage}
+            \end{frame}
+
+        \subsection{Fundamentos}
+
+            \begin{frame}{Fundamentos}
+                \begin{itemize}
+                    \item El modelo de Bandadas de Agentes Autopropulsados se basa en dos ecuaciones principales:
+                        \begin{equation}
+                            x_i(t+1) = x_i(t) + v_i(t) \Delta t\label{eq:equation1}
+                        \end{equation}
+                        \begin{equation}
+                            \theta(t+1) = \langle \theta(t) \rangle_r+ \Delta \theta\label{eq:equation2}
+                        \end{equation}
+                    \item El $\langle \theta(t) \rangle_r$ es el promedio de los ángulos de las partículas vecinas:
+                        \begin{equation}
+                            \langle \theta(t) \rangle_r = atan2(\langle sin(\theta(t)) \rangle_r, \langle cos(\theta(t)) \rangle_r)
+                        \end{equation}
+                \end{itemize}
+            \end{frame}
 
     \section{Implementación}
 
-    \begin{frame}{Implementación}
-        \begin{itemize}
-            \item El modelo computacional se realizó en Java y cuenta con tres clases principales:
+        \begin{frame}{Implementación}
             \begin{itemize}
-                \item \texttt{MovingParticle}: representa una partícula
-                en el espacio.
-                \item \texttt{OffLatticeAutomata}: representa el modelo de bandadas de agentes autopropulsados.
-                \item \texttt{Main}: clase principal que ejecuta la simulación.
+                \item El modelo computacional se realizó en Java y cuenta con tres clases principales:
+                \begin{itemize}
+                    \item \texttt{MovingParticle}: representa una partícula en el espacio.
+                    \item \texttt{OffLatticeAutomata}: representa el modelo de bandadas de agentes autopropulsados.
+                    \item \texttt{Main}: clase principal que ejecuta la simulación.
+                \end{itemize}
             \end{itemize}
-        \end{itemize}
-    \end{frame}
+        \end{frame}
 
-    \subsection{Arquitectura}
-    \begin{frame}{Diagrama UML}
-        \begin{figure}[htbp]
-            \centering
-            \includegraphics[width=\textwidth]{./architecture-landscape}
-            \label{fig:architecture}
-        \end{figure}
-    \end{frame}
+        \subsection{Arquitectura}
 
-    \subsection{Algoritmo}
-    \begin{frame}{Autómata Off Lattice}
-        \begin{algorithmic}[1]
-            \small
-            \State Creación output de la simulación
-            \While{$t < t_{max}$}
-                \State CellIndexMethod()
-                \State Obtención partículas vecinas de cada partícula en $t$
-                \State Creación lista de objetos Partícula - ÁngulosVecinas en $t$
-                \For{Par en lista de Partícula - ÁngulosVecinas}
-                    \State Cálculo ángulo promedio de las partículas vecinas
-                    \State Definición nuevo ángulo de la partícula en $t+1$
-                    \State Actualización posición $x$ de la partícula en $t+1$
-                    \State Actualización posición $y$ de la partícula en $t+1$
-                    \State Escritura de información en output
-                \EndFor
-                \State Incremento del instante de tiempo $t$
-            \EndWhile
-        \end{algorithmic}
-        \label{alg:algorithm}
+            \begin{frame}{Diagrama UML}
+                \begin{figure}[htbp]
+                    \centering
+                    \includegraphics[width=\textwidth]{./architecture-landscape}
+                    \label{fig:architecture}
+                \end{figure}
+            \end{frame}
 
-    \end{frame}
+        \subsection{Algoritmo}
 
+            \begin{frame}{Pseudocódigo del algoritmo implementado}{}
+%                {\fontfamily{consola}\selectfont
+                    \begin{algorithmic}[1]
+                        \ttfamily \footnotesize
+                        \State Create output file
+                        \While{$t < t_{max}$}
+                            \State neighbours $\gets$ \Call{CellIndexMethod()}{}
+                            \State list$_{\text{particle, angles}}$ $\gets$ \Call{Map}{neighbours}
+                            \Comment{En $t$}
+                            \ForAll{(particle, angles) $\in$ list}
+                                \State $\theta_{\text{new}} \gets$ \Call{NewAngle}{particle, angles}
+                                \State \Call{UpdateAngle}{particle, $\theta_{\text{new}}$}
+                                \State \Call{UpdateXPosition}{particle, $\theta_{\text{new}}$}
+                                \State \Call{UpdateYPosition}{particle, $\theta_{\text{new}}$}
+                                \State Write output for $t$
+                            \EndFor
+                            \State $t \gets t + 1$
+                        \EndWhile
+                    \end{algorithmic}
+%                }
+            \end{frame}
 
     \section{Simulaciones}
 
-    \begin{frame}{Simulaciones}
-        Descripción del sistema particular que se va a simular y estudiar como
-        geometría, rango de parámetros fijos y variables, inputs y outputs a estudiar. Ilustrar con un
-        esquema el sistema particular que se va a simular.
-        Además, se deben definir los observables que se calcularán a partir del output directo de la
-        simulación (que presenta el estado del sistema para ciertos instantes de tiempo). Estas
-        definiciones deben ser expresadas matemáticamente. Por ejemplo, si se va a promediar una cierta
-        cantidad hay que explicitar cómo se promedia, que se va a estar sumando y sobre qué se estará
-        dividiendo.
-        Detallar el número de repeticiones y tiempos de las simulaciones realizadas.
-    \end{frame}
+        \subsection{Parámetros de entrada}
+
+            \begin{frame}{Parámetros de entrada}
+                \begin{itemize}
+                    \item Parámetros de entrada fijos:
+                    \begin{itemize}
+                        \item $r_c$: radio de interacción. \alert{Se considera $r_c=1$}
+                        \item $v$: módulo de la velocidad. \alert{Se considera $v=0.03$}
+                        \item $L$: longitud del plano. \alert{Se considera $L=5$}
+                    \end{itemize}
+                    \item Parámetros de entrada variables:
+                    \begin{itemize}
+                        \item $N$: cantidad de partículas
+                        \item $\eta$: ruido
+                    \end{itemize}
+                \end{itemize}
+            \end{frame}
+
+        \subsection{Salida de la simulación}
+
+            \begin{frame}[fragile]{Archivo de salida}
+                \begin{itemize}
+                    \item Se genera un archivo \texttt{.txt} con la información de cada partícula, para cada tiempo
+                \end{itemize}
+                \begin{exampleblock}{Ejemplo}
+                    \begin{verbatim}
+0 p_0 4.204905 3.934431 -1.851475
+0 p_1 2.606319 1.453672 -1.034532
+0 p_2 4.460304 4.998664 -1.692054
+...
+597 p_179 3.054664 1.422251 1.905239
+597 p_180 4.249935 2.057734 1.916287
+597 p_181 4.204868 0.888108 1.815435
+                    \end{verbatim}
+                \end{exampleblock}
+            \end{frame}
+
+        \subsection{Observables}
+
+            \begin{frame}{Parámetro de orden o polarización $v_a$}
+                \begin{itemize}
+                    \item Se define como:
+                    \begin{equation}
+                        v_a = \frac{1}{Nv} \left|\sum_{i=1}^{N} \vec{v_i} \right|
+                    \end{equation}
+                    \item Tiende a cero (0) cuando las partículas se encuentran en total desorden.
+                    \item Tiende a uno (1) cuando las partículas se encuentran polarizadas.
+                \end{itemize}
+            \end{frame}
+
+            \begin{frame}{Tiempo en el que el nro. de visitas alcanza el 20\% de $N$ }
+                \begin{itemize}
+                    \item Se define para las visitas en condiciones periódicas de contorno.
+                    \item Se estudia su variación dependiendo de $\eta$ (ruido).
+                    \item Como se tienen en cuenta cuatro $(4)$ zonas circulares fijas de visitas, es necesario promediar
+                    los tiempos obtenidos de cada una de ellas y su error asociado:
+                    \begin{equation}
+                        t_{\text{prom}} = \frac{1}{4} \sum_{i=1}^{4} t_i \ ,\ t_i\text{: tiempo en la zona }i
+                    \end{equation}
+                \end{itemize}
+            \end{frame}
+
+            \begin{frame}{Número de visitas por unidad de tiempo}
+                \begin{itemize}
+                    \item Se define para las visitas en condiciones abiertas de contorno.
+                    \item Se estudia su variación dependiendo de $\eta$ (ruido).
+                    \item Se lo calcula como la pendiente de la curva de nro. de visitas en función del tiempo.
+                    Se aplica el método de regresión lineal simple:
+                    \begin{equation}
+                        m_k = \frac{N \sum_{i=1}^N x_i y_i - \sum_{i=1}^N x_i \sum_{i=1}^N y_i }{N \sum_{i=1}^N x_i^2 - \left(\sum_{i=1}^N x_i \right)^2}
+                        \ , 1 \leq k \leq 4
+                    \end{equation}
+                    \item Se promedian los valores obtenidos de cada una de las zonas y se calcula su error asociado:
+                    \begin{equation}
+                        m_{prom}(N,\eta) = \frac{1}{4} \sum_{i=1}^{4} m_i
+                    \end{equation}
+                \end{itemize}
+            \end{frame}
+
 
     \section{Resultados}
 
-    \subsection[Parámetro de Orden]{Parámetro de Orden}
+        \subsection{Parámetro de orden $v_a$}
 
-    \begin{frame}{Animación}
-        Estructurar la sección de resultados de la siguiente manera.
-        2.4.1 Para cada input o parámetro a estudiar, primero mostrar una animación característica del
-        sistema (pueden ser dos, con dos valores extremos del input para ver ejemplos de distintos
-        comportamientos). La idea de esto es ilustrar la dinámica del sistema para situar el contexto de los
-        resultados a mostrar.
-    \end{frame}
+            \begin{frame}{Parámetro de orden $v_a$}{Animación}
+                \begin{minipage}[t]{0.60\textwidth}
+                    \begin{figure}[H!]
+                        \includegraphics[height=.65\textheight]{./animation-n300-eta0p6-frame}
+                        \caption*{Véase la animación completa en \url{https://youtu.be/q8ep24AgTzU}.}
+                        \label{fig:va_1}
+                    \end{figure}
+                \end{minipage}
+                \hfill
+                \begin{minipage}[t]{0.30\textwidth}
+                    \begin{block}{Datos del sistema}
+                        \begin{itemize}
+                            \item $N=300$
+                            \item $L=5$
+                            \item $\eta=0.6$
+                        \end{itemize}
+                    \end{block}
+                \end{minipage}
+            \end{frame}
 
-    \begin{frame}{Observable en función del tiempo}
-        2.4.2 Luego mostrar una figura del observable o métrica (que se calcula a partir de los outputs
-        directos de la simulación) en función del tiempo. Explicar entonces cual será el escalar que
-        caracteriza ese proceso (por ejemplo el promedio de la evolución temporal en el estado
-        estacionario, la tasa de crecimiento, etc.). Solo mostrar evoluciones típicas, de valores extremos
-        del rango de parámetros, para validar las definiciones de los observables. Las evoluciones en sí
-        no son los resultados definitivos, por lo tanto no deben ser extenso lo que se muestre de las
-        mismas solo para justificar el observable (escalar) que se calculará a partir de estas.
-    \end{frame}
+            \begin{frame}{Parámetro de orden $v_a$}{Animación}
+                \begin{minipage}[t]{0.60\textwidth}
+                    \begin{figure}[H!]
+                        \includegraphics[height=.65\textheight]{./animation-n300-eta2p4-frame}
+                        \caption*{Véase la animación completa en \url{https://youtu.be/aZ9eOtlXgQw}.}
+                        \label{fig:va_2}
+                    \end{figure}
+                \end{minipage}
+                \hfill
+                \begin{minipage}[t]{0.30\textwidth}
+                    \begin{block}{Datos del sistema}
+                        \begin{itemize}
+                            \item $N=300$
+                            \item $L=5$
+                            \item $\eta=02.4$
+                        \end{itemize}
+                    \end{block}
+                \end{minipage}
+            \end{frame}
 
-    \begin{frame}{Input vs observable}
-        2.4.3 Después presentar la figura del input vs. observable, con promedio y barras de error o tablas
-        con promedio y error.
-    \end{frame}
+            \begin{frame}{Parámetro de orden $v_a$}{Animación}
+                \begin{minipage}[t]{0.60\textwidth}
+                    \begin{figure}[H!]
+                        \includegraphics[height=.65\textheight]{./animation-n300-eta5p2-frame}
+                        \caption*{Véase la animación completa en \url{https://youtu.be/QkXskl_8CGs}.}
+                        \label{fig:va_3}
+                    \end{figure}
+                \end{minipage}
+                \hfill
+                \begin{minipage}[t]{0.30\textwidth}
+                    \begin{block}{Datos del sistema}
+                        \begin{itemize}
+                            \item $N=300$
+                            \item $L=5$
+                            \item $\eta=5.2$
+                        \end{itemize}
+                    \end{block}
+                \end{minipage}
+            \end{frame}
 
-    \subsection[Visitas PBC]{Visitas PBC: Tiempo en el que el nro. de visitas alcanza el 20\% de N}
+            \begin{frame}{Parámetro de orden $v_a$}{$v_a$ en función del tiempo}
+                    \begin{figure}[H!]
+                        \includegraphics[width=0.9\textwidth]{./va_vs_time-n300}
+                        \label{fig:va_4}
+                    \end{figure}
+                    \begin{beamercolorbox}[sep=5pt,center]{block body}
+                        \begin{minipage}[t]{0.45\textwidth}
+                            \centering
+                            \small{$N=300$}
+                        \end{minipage}
+                        \hfill
+                        \begin{minipage}[t]{0.45\textwidth}
+                            \centering
+                            \small{$L=5$}
+                        \end{minipage}
+                    \end{beamercolorbox}
+            \end{frame}
 
-    \begin{frame}{Animación}
-        Estructurar la sección de resultados de la siguiente manera.
-        2.4.1 Para cada input o parámetro a estudiar, primero mostrar una animación característica del
-        sistema (pueden ser dos, con dos valores extremos del input para ver ejemplos de distintos
-        comportamientos). La idea de esto es ilustrar la dinámica del sistema para situar el contexto de los
-        resultados a mostrar.
-    \end{frame}
+            \begin{frame}{Parámetro de orden $v_a$}{$v_a$ en función del ruido ($\eta$)}
+                \begin{figure}[H!]
+                    \includegraphics[width=0.9\textwidth]{./va_vs_eta}
+                    \label{fig:va_5}
+                \end{figure}
+                \begin{beamercolorbox}[sep=5pt,center]{block body}
+                    \small{$L=5$}
+                \end{beamercolorbox}
+            \end{frame}
 
-    \begin{frame}{Observable en función del tiempo}
-        2.4.2 Luego mostrar una figura del observable o métrica (que se calcula a partir de los outputs
-        directos de la simulación) en función del tiempo. Explicar entonces cual será el escalar que
-        caracteriza ese proceso (por ejemplo el promedio de la evolución temporal en el estado
-        estacionario, la tasa de crecimiento, etc.). Solo mostrar evoluciones típicas, de valores extremos
-        del rango de parámetros, para validar las definiciones de los observables. Las evoluciones en sí
-        no son los resultados definitivos, por lo tanto no deben ser extenso lo que se muestre de las
-        mismas solo para justificar el observable (escalar) que se calculará a partir de estas.
-    \end{frame}
+        \subsection{Tiempo en el que el nro. de visitas alcanza el 20\% de $N$}
 
-    \begin{frame}{Input vs observable}
-        2.4.3 Después presentar la figura del input vs. observable, con promedio y barras de error o tablas
-        con promedio y error.
-    \end{frame}
+            \begin{frame}{Tiempo en el que el nro. de visitas alcanza el 20\% de $N$}{Animación}
+                \begin{minipage}[t]{0.60\textwidth}
+                    \begin{figure}[H!]
+                        \includegraphics[height=.65\textheight]{animation_visits_pbc-n300-eta0p6-frame}
+                        \caption*{Véase la animación completa en \url{https://youtu.be/MGHMlVLz0Ys}.}
+                        \label{fig:pbc_1}
+                    \end{figure}
+                \end{minipage}
+                \hfill
+                \begin{minipage}[t]{0.30\textwidth}
+                    \begin{block}{Datos del sistema}
+                        \begin{itemize}
+                            \item $N=300$
+                            \item $L=5$
+                            \item $\eta=0.6$
+                        \end{itemize}
+                    \end{block}
+                \end{minipage}
+            \end{frame}
 
-    \subsection[Visitas OBC]{Visitas OBC: Nro. de visitas por unidad de tiempo}
+            \begin{frame}{Tiempo en el que el nro. de visitas alcanza el 20\% de $N$}{Cantidad total de visitas en función del tiempo}
+                \begin{figure}[H!]
+                    \includegraphics[width=0.9\textwidth]{./visits_vs_time_pbc-n300-eta0p6}
+                    \label{fig:pbc_2}
+                \end{figure}
+                \begin{beamercolorbox}[sep=5pt,center]{block body}
+                    \begin{minipage}[t]{0.3\textwidth}
+                        \centering
+                        \small{$N=300$}
+                    \end{minipage}
+                    \hfill
+                    \begin{minipage}[t]{0.3\textwidth}
+                        \centering
+                        \small{$L=5$}
+                    \end{minipage}
+                    \hfill
+                    \begin{minipage}[t]{0.3\textwidth}
+                        \centering
+                        \small{$\eta=0.6$}
+                    \end{minipage}
+                \end{beamercolorbox}
+            \end{frame}
 
-    \begin{frame}{Animación}
-        Estructurar la sección de resultados de la siguiente manera.
-        2.4.1 Para cada input o parámetro a estudiar, primero mostrar una animación característica del
-        sistema (pueden ser dos, con dos valores extremos del input para ver ejemplos de distintos
-        comportamientos). La idea de esto es ilustrar la dinámica del sistema para situar el contexto de los
-        resultados a mostrar.
-    \end{frame}
+            \begin{frame}{Tiempo en el que el nro. de visitas alcanza el 20\% de $N$}{Observable en función del ruido ($\eta$)}
+                \begin{figure}[H!]
+                    \includegraphics[width=0.9\textwidth]{./threshold_vs_eta-pbc}
+                    \label{fig:pbc_3}
+                \end{figure}
+                \begin{beamercolorbox}[sep=5pt,center]{block body}
+                    \begin{minipage}[t]{0.45\textwidth}
+                        \centering
+                        \small{$L=5$}
+                    \end{minipage}
+                    \hfill
+                    \begin{minipage}[t]{0.45\textwidth}
+                        \centering
+                        \small{$\eta=0.6$}
+                    \end{minipage}
+                \end{beamercolorbox}
+            \end{frame}
 
-    \begin{frame}{Observable en función del tiempo}
-        2.4.2 Luego mostrar una figura del observable o métrica (que se calcula a partir de los outputs
-        directos de la simulación) en función del tiempo. Explicar entonces cual será el escalar que
-        caracteriza ese proceso (por ejemplo el promedio de la evolución temporal en el estado
-        estacionario, la tasa de crecimiento, etc.). Solo mostrar evoluciones típicas, de valores extremos
-        del rango de parámetros, para validar las definiciones de los observables. Las evoluciones en sí
-        no son los resultados definitivos, por lo tanto no deben ser extenso lo que se muestre de las
-        mismas solo para justificar el observable (escalar) que se calculará a partir de estas.
-    \end{frame}
+        \subsection{Nro. de visitas por unidad de tiempo}
 
-    \begin{frame}{Input vs observable}
-        2.4.3 Después presentar la figura del input vs. observable, con promedio y barras de error o tablas
-        con promedio y error.
-    \end{frame}
+            \begin{frame}{Nro. de visitas por unidad de tiempo}{Animación}
+                \begin{minipage}[t]{0.60\textwidth}
+                    \begin{figure}[H!]
+                        \includegraphics[height=.65\textheight]{./animation_visits_obc-n300-eta0p6-frame}
+                        \caption*{Véase la animación completa en \url{https://youtu.be/TXe88VVMnL4}.}
+                        \label{fig:obc_1}
+                    \end{figure}
+                \end{minipage}
+                \hfill
+                \begin{minipage}[t]{0.30\textwidth}
+                    \begin{block}{Datos del sistema}
+                        \begin{itemize}
+                            \item $N=300$
+                            \item $L=5$
+                            \item $\eta=0.6$
+                        \end{itemize}
+                    \end{block}
+                \end{minipage}
+            \end{frame}
 
+            \begin{frame}{Nro. de visitas por unidad de tiempo}{Cantidad total de visitas en función del tiempo}
+                \begin{figure}[H!]
+                    \includegraphics[width=0.9\textwidth]{./visits_vs_time_obc-n300-eta0p6}
+                    \label{fig:obc_2}
+                \end{figure}
+                \begin{beamercolorbox}[sep=5pt,center]{block body}
+                    \begin{minipage}[t]{0.3\textwidth}
+                        \centering
+                        \small{$N=300$}
+                    \end{minipage}
+                    \hfill
+                    \begin{minipage}[t]{0.3\textwidth}
+                        \centering
+                        \small{$L=5$}
+                    \end{minipage}
+                    \hfill
+                    \begin{minipage}[t]{0.3\textwidth}
+                        \centering
+                        \small{$\eta=0.6$}
+                    \end{minipage}
+                \end{beamercolorbox}
+            \end{frame}
+
+            \begin{frame}{Nro. de visitas por unidad de tiempo}{Observable en función del ruido ($\eta$)}
+                \begin{figure}[H!]
+                    \includegraphics[width=0.9\textwidth]{./slope_vs_eta-obc}
+                    \label{fig:obc_3}
+                \end{figure}
+                \begin{beamercolorbox}[sep=5pt,center]{block body}
+                    \begin{minipage}[t]{0.45\textwidth}
+                        \centering
+                        \small{$L=5$}
+                    \end{minipage}
+                    \hfill
+                    \begin{minipage}[t]{0.45\textwidth}
+                        \centering
+                        \small{$\eta=0.6$}
+                    \end{minipage}
+                \end{beamercolorbox}
+            \end{frame}
 
     \section{Conclusiones}
 
-    \begin{frame}{Conclusiones}
-        (1 diapositiva): Basadas solo en los resultados mostrados, no son conclusiones
-        resultados observados pero no mostrados en resultados, ni hipótesis de posibles explicaciones de
-        lo observado que no hayan sido estudiadas explícitamente, cualquier hipótesis que
-        potencialmente explique lo observado, debe ser probada explícitamente y mostrada en resultados,
-        caso contrario no es válida como conclusión. Tampoco es una conclusión algo que haya quedado
-        por hacer o algo que se haya hecho mal y se descartó.
-    \end{frame}
-
-%    \begin{frame}{Conclusiones}
-%
-%        % Keep the summary *very short*.
-%        \begin{itemize}
-%            \item
-%            The \alert{first main message} of your talk in one or two lines.
-%            \item
-%            The \alert{second main message} of your talk in one or two lines.
-%            \item
-%            Perhaps a \alert{third message}, but not more than that.
-%        \end{itemize}
-%
-%        % The following outlook is optional.
-%        \vskip0pt plus.5fill
-%        \begin{itemize}
-%            \item
-%            Outlook
-%            \begin{itemize}
-%                \item
-%                Something you haven't solved.
-%                \item
-%                Something else you haven't solved.
-%            \end{itemize}
-%        \end{itemize}
-%    \end{frame}
-
+        \begin{frame}{Conclusiones}
+            \begin{itemize}
+                \item Se observó que a medida que aumenta la cantidad de partículas, la polarización tiende a ser
+                levemente mayor
+                \item En las visitas PBC se puede notar que:
+                \begin{itemize}
+                    \item a medida que el ruido se incrementa, el tiempo en el que el número de visitas alcanza un
+                    porcentaje de $N$ también aumenta.
+                    \item para valores de baja cantidad de partículas y/o alto ruido, no se alcanza ese umbral.
+                \end{itemize}
+                \item En las visitas OBC se puede contemplar que la cantidad de visitas por unidad de tiempo se mantiene
+                constante a medida que el ruido aumenta, sin importar el $N$.
+            \end{itemize}
+        \end{frame}
 
 \end{document}
