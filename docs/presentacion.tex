@@ -14,6 +14,9 @@
 
 \captionsetup{justification=centering, font={scriptsize}, skip=0pt}
 
+% Set bold vectors to satisfy requirements
+\renewcommand\vec[1]{\ifstrequal{#1}{0}{\ensuremath{\mathbf{0}}}{\ensuremath{\boldsymbol{#1}}}}
+
 \usetheme[compress]{Berlin}
 \setbeamertemplate{page number in head/foot}[framenumber]
 

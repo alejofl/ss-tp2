@@ -21,6 +21,9 @@
 \captionsetup[algorithm]{labelsep=colon, name=Algoritmo}
 \captionsetup{justification=centering}
 
+% Set bold vectors to satisfy requirements
+\renewcommand\vec[1]{\ifstrequal{#1}{0}{\ensuremath{\mathbf{0}}}{\ensuremath{\boldsymbol{#1}}}}
+
 % Document
 \begin{document}
 
