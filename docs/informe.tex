@@ -285,7 +285,7 @@
             \end{equation}
 
             Donde $N$ representa la cantidad de partículas y $v$ es el módulo de la velocidad de las mismas.
-            Por último, se tiene la norma de la sumatoria de todos los vectores $\vec{v_i} \ / \  0 \geq i < N$,
+            Por último, se tiene la norma de la sumatoria de todos los vectores $\vec{v_i} \ / \  1 \le i \le N$,
             que representan el vector velocidad de la partícula i-ésima.
             El valor del parámetro de orden tiende a cero (0) cuando las partículas se encuentran en total desorden;
             por otro lado, tiende a uno (1) cuando las partículas se encuentran polarizadas, es decir, se trasladan en la misma dirección.
@@ -329,12 +329,12 @@
             El sistema que se simula en este caso es el mismo que se describe en el primer apartado de la subsección
             anterior, pero con la particularidad de que ahora se realiza con condiciones abiertas de contorno.
             Esta condición refiere al hecho de que los identificadores de las partículas no se considerarán inmutables.
-            Cuando las partículas atraviesen las paredes del plano del sistema cambiarán su identificador. Esto genera
-            que las partículas que no hayan atravesado paredes solo pueden ser contadas una vez en cada zona de medición,
-            pero si en cambio salieron de los límites serán contabilizadas nuevamente.
+            Cuando las partículas atraviesen las paredes del plano del sistema, cambiarán su identificador. Esto genera
+            que las partículas que no hayan atravesado paredes solo pueden ser contadas una vez en cada zona de medición.
+            En cambio, salieron de los límites serán contabilizadas nuevamente.
 
-            El observable a estudiar es el número de visitas por unidad de tiempo dependiendo de $\eta$ (ruido), es decir,
-            la pendiente de la curva número de visitas en función del tiempo en la zona donde dicho valor sea estacionario.
+            El observable a estudiar es el número de visitas por unidad de tiempo, es decir, la pendiente de la curva
+            número de visitas en función del tiempo en la zona donde dicho valor sea estacionario.
             Este estudio, al igual que el descripto en el apartado anterior, se realiza para los mismos cuatro (4) Ns
             ($100$, $300$, $500$ y $1000$), variando $\eta$ en el mismo rango (de $0$ a $5,8$, con un paso de $0,2$).
 
@@ -342,7 +342,7 @@
             de cada una de las cuatro (4) zonas de conteo.
             Dado que el caracter de estas curvas es no lineal, es imperioso obtener la pendiente de la recta asociada
             a cada una de ellas mediante el método de regresión lineal simple, que es un método que permite aproximar
-            la relación de dependencia entre una variable independiente $y$ (cantidad de visitas) y un conjunto de
+            la relación de dependencia entre una variable dependiente $y$ (cantidad de visitas) y un conjunto de
             variables independientes $x$ (tiempo).
             La definición de la recta asociada es la siguiente:
 
@@ -358,8 +358,8 @@
                 \beta_0 = \frac{N \sum_{i=1}^N x_i y_i - \sum_{i=1}^N x_i \sum_{i=1}^N y_i }{N \sum_{i=1}^N x_i^2 - \left(\sum_{i=1}^N x_i \right)^2}
             \end{equation}
 
-            Este coeficiente representa el valor de la pendiente de la recta asociada a la curva de visitas en función de tiempo y
-            debido a que es una pendiente, de ahora en más se la llamará $m$:
+            Este coeficiente representa el valor de la pendiente de la recta asociada a la curva de visitas en función
+            de tiempo y debido a que es una pendiente, de ahora en más se la llamará $m$:
 
             \begin{equation}
                 m_k = \frac{N \sum_{i=1}^N x_i y_i - \sum_{i=1}^N x_i \sum_{i=1}^N y_i }{N \sum_{i=1}^N x_i^2 - \left(\sum_{i=1}^N x_i \right)^2}
@@ -379,7 +379,9 @@
             \end{equation}
 
             Además, por su condición de promedio debemos obtener el error asociado mediante el desvío estándar.
-            Como fue mencionado anteriormente, al ser un tamaño de muestra pequeño, se introduce un sesgo en la estimación de la desviación estándar. Dicho sesgo se corrige limitando los grados de libertad en 1, es decir, \texttt{ddof=1}:
+            Como fue mencionado anteriormente, al ser un tamaño de muestra pequeño, se introduce un sesgo en la
+            estimación de la desviación estándar.
+            Dicho sesgo se corrige limitando los grados de libertad en 1, es decir, \texttt{ddof=1}:
 
             \begin{equation}
                 \sigma = \sqrt{\frac{1}{3} \sum_{i=1}^{4} (m_i - m_{prom})^2}
@@ -517,7 +519,10 @@
             \end{figure}
 
             En la Figura~\ref{fig:visitas_obc_2} se muestra el número de visitas totales en función del tiempo.
-            Se pueden visualizar cuatro curvas, cada una correspondiente a una zona de conteo.
+            Se pueden visualizar diferentes curvas, coloreadas de cuatro colores distintos.
+            Cada color representa un valor de ruido $\eta$ determiando.
+            También se puede observar que se grafican cuatro curvas para cada ruido, esto es así pues cada una de ellas
+            corresponde a una zona de conteo.
 
             \begin{figure}[H]
                 \centering
@@ -547,8 +552,7 @@
             Véase la sección~\ref{subsec:visitas-obc} para un análisis más detallado del cálculo de dichos valores.
 
             Resulta particularmente interesante el resultado del gráfico de la Figura~\ref{fig:visitas_obc_3}.
-            Se puede observar que a medida que el ruido aumenta, la cantidad de visitas por unidad de tiempo se mantiene
-            en un rango de valores acotado constante.
+            Se puede observar que a medida que el ruido aumenta, la cantidad de visitas por unidad de tiempo disminuye.
             Además, se puede notar que la cantidad de visitas por unidad de tiempo es mayor a medida que $N$ aumenta,
             como es de esperar.
 
@@ -578,9 +582,12 @@
         Asimismo, se pudo notar que para valores de baja cantidad de partículas y/o alto ruido, no se alcanza el umbral.
 
         Por último, para el estudio de las visitas en condiciones abiertas de contorno, se ha observado que la cantidad
-        de visitas por unidad de tiempo se mantiene constante a medida que el ruido aumenta, sin importar la cantidad de
+        de visitas por unidad de tiempo disminuye a medida que el ruido aumenta, sin importar la cantidad de
         partículas del sistema.
-        Se ha encontrado que la cantidad de visitas por unidad de tiempo es mayor a medida que la cantidad de partículas
+        Vale la pena destacar la siguiente peculiaridad: para valores de $\eta$ altos, todas las simulaciones muestran
+        el mismo comportamiento con respecto a la cantidad de visitas por unidad de tiempo; sin importar la cantidad de
+        partículas del sistema, una cantidad cuasi constante de ellas son las que visitan las zonas de conteo.
+        Finalmente, se ha encontrado que la cantidad de visitas por unidad de tiempo es mayor a medida que la cantidad de partículas
         aumenta, como es esperable debido al incremento de la densidad del sistema.
 
         Estas conclusiones reflejan los hallazgos y las observaciones derivadas del análisis de los resultados
