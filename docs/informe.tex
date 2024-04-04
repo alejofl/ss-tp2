@@ -116,7 +116,7 @@
         \subsection{Fundamentos}
         \label{subsec:fundamentos}
 
-            El sistema se puede caracterizar a través de tres parámetros de entrada, que determinarán el comportamiento
+            El sistema se puede caracterizar a través de cuatro parámetros de entrada, que determinarán el comportamiento
             del mismo:
 
             \begin{itemize}
@@ -156,7 +156,7 @@
     \section{Implementación}
     \label{sec:implementacion}
 
-        La implementación del modelo matemático de autómatas autopropulsados se realizó en Java, en su versión 19 en
+        La implementación del modelo matemático de autómatas autopropulsados se realizó en Java, en su versión 19, en
         conjunto con Maven para la gestión de dependencias.
 
         Java se utilizó para la implementación del modelo Off Lattice, y para llevar adelante la simulación.
@@ -298,7 +298,7 @@
 
             En este caso, luego de ejecutar la simulación de un sistema de partículas que se mueven en una celda de lado $L$,
             se estudia cómo las partículas circulan a través de cuatro (4) zonas de conteo circulares fijas de radio $0,5$.
-            Su ubicación, si bien es calculada aleatoriamente, se mantiene constante para todas las simulaciones, cuando se varía $N$ 0 $\eta$.
+            Su ubicación, si bien es calculada aleatoriamente, se mantiene constante para todas las simulaciones, cuando se varía $N$ o $\eta$.
 
             Al tener condiciones periódicas de contorno, se consideran que los identificadores de las partículas son inmutables.
             Por lo tanto, cada partícula solo debe ser contabilizada una vez al visitar cada zona de medición.
@@ -334,7 +334,7 @@
             Esta condición refiere al hecho de que los identificadores de las partículas no se considerarán inmutables.
             Cuando las partículas atraviesen las paredes del plano del sistema, cambiarán su identificador. Esto genera
             que las partículas que no hayan atravesado paredes solo pueden ser contadas una vez en cada zona de medición.
-            En cambio, salieron de los límites serán contabilizadas nuevamente.
+            En cambio, si salieron de los límites serán contabilizadas nuevamente.
 
             El observable a estudiar es el número de visitas por unidad de tiempo, es decir, la pendiente de la curva
             número de visitas en función del tiempo en la zona donde dicho valor sea estacionario.
